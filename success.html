@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket Confirmed – Black Coffee - Tirana | GETIN</title>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Medium.ttf'); font-weight: 500; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #fff; font-family: 'Mona Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+    /* TOP NAV */
+    .top-nav { position: sticky; top: 0; z-index: 100; background: #000; border-bottom: 1px solid rgba(37,32,69,0.67); height: 62px; }
+    .top-nav-inner { max-width: 1200px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+    .nav-logo { font-size: 22px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .nav-link { color: #fff; font-size: 16px; text-decoration: none; padding: 8px 15px; letter-spacing: 0.8px; transition: opacity .2s; }
+    .nav-link:hover { opacity: .7; }
+    .nav-btn-create { background: #fff; color: #0e0f11; border: none; border-radius: 50px; padding: 10px 24px; font-family: 'Mona Sans',sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; }
+    .nav-lang { background: #fff; color: #11152b; border: none; border-radius: 6px; padding: 3px 8px; font-size: 9px; font-weight: 600; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+
+    /* PAGE */
+    .page-body { position: relative; min-height: calc(100vh - 62px); padding: 40px 20px 80px; display: flex; flex-direction: column; align-items: center; }
+    .back-btn { position: absolute; top: 38px; left: 40px; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; cursor: pointer; text-decoration: none; color: #fff; opacity: .7; transition: opacity .2s; }
+    .back-btn:hover { opacity: 1; }
+    .back-btn svg { width: 9px; height: 18px; }
+
+    /* SUCCESS CARD */
+    .success-card { width: 100%; max-width: 540px; margin-top: 52px; background: rgba(255,255,255,0.03); backdrop-filter: blur(25px); border: 1px solid #0e0f11; border-radius: 8px; padding: 49px 24px; display: flex; flex-direction: column; align-items: center; gap: 36px; animation: fadeIn .4s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    .success-headline { text-align: center; display: flex; flex-direction: column; gap: 0; }
+    .success-headline p { font-size: 24px; font-weight: 400; line-height: 36px; text-align: center; }
+
+    .event-info { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+    .event-poster { width: 160px; height: 160px; border-radius: 8px; overflow: hidden; }
+    .event-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .terms-link { margin-top: 28px; font-size: 16px; color: #fff; text-decoration: none; }
+    .terms-link:hover { text-decoration: underline; }
+    .detail-row { display: flex; align-items: center; gap: 17px; font-size: 14px; color: #fff; }
+    .detail-row img { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .app-cta { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; max-width: 420px; }
+    .app-cta-texts { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+    .app-cta-title { font-size: 12px; font-weight: 700; letter-spacing: .6px; line-height: 18px; }
+    .app-cta-desc { font-size: 10px; font-weight: 500; letter-spacing: .5px; line-height: 15px; color: #ffffffcc; }
+    .store-btns { display: flex; gap: 15px; align-items: center; justify-content: center; }
+    .store-btn { display: flex; align-items: center; gap: 15px; width: 165px; height: 58px; background: #0e0f11; border: 1px solid #1c1d21; border-radius: 5px; padding: 11px; text-decoration: none; transition: border-color .2s; }
+    .store-btn:hover { border-color: #444; }
+    .store-btn-icon { width: 24px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .store-btn-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .store-btn-text { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .store-btn-text .get-it { font-size: 10px; color: #fff; letter-spacing: .5px; line-height: 15px; }
+    .store-btn-text .store-name { font-size: 16px; color: #fff; letter-spacing: .8px; line-height: 24px; }
+
+    /* MANDALA CLUB CARD */
+    .mandala-card {
+      width: 100%; max-width: 540px; margin-top: 24px;
+      background: #17191f;
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      animation: fadeIn .4s ease .1s both;
+    }
+    .mandala-logo { height: 22px; }
+    .mandala-confirm { font-size: 15px; font-weight: 500; color: #fff; text-align: center; line-height: 1.5; letter-spacing: -0.3px; }
+    .mandala-film { width: 100%; max-width: 376px; border-radius: 8px; overflow: hidden; }
+    .mandala-film img { width: 100%; display: block; }
+    .mandala-tagline { font-size: 17px; font-weight: 600; text-align: center; line-height: 1.4; }
+    .mandala-tagline .gold { color: #e8b500; }
+    .mandala-creds { font-size: 15px; font-weight: 500; color: #fff; text-align: center; line-height: 1.7; letter-spacing: -0.3px; }
+    .mandala-benefits {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px;
+      width: 100%; padding: 0 8px;
+    }
+    .benefit-item { padding: 8px 0; display: flex; flex-direction: column; gap: 3px; }
+    .benefit-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+    .benefit-desc  { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.4; }
+    .btn-explore-mandala {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #f2f2f2; color: #000;
+      border: 1px solid #000; border-radius: 4px;
+      padding: 12px 20px;
+      font-family: 'Mona Sans', sans-serif; font-size: 15px; font-weight: 500;
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: background .2s, transform .1s;
+      width: 100%; max-width: 280px;
+    }
+    .btn-explore-mandala:hover { background: #e0e0e0; transform: translateY(-1px); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 12px;
+      background: #1c1d21; border: 1px solid #333; border-radius: 10px;
+      padding: 14px 20px; min-width: 280px; max-width: 480px;
+      font-size: 13px; line-height: 18px; color: #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,.6);
+      opacity: 0; transition: opacity .3s ease; pointer-events: none; z-index: 999;
+    }
+    .toast.show { opacity: 1; pointer-events: auto; }
+    .toast-icon { font-size: 20px; flex-shrink: 0; }
+    .toast-body { flex: 1; }
+    .toast-body strong { display: block; margin-bottom: 2px; font-size: 14px; }
+    .toast.success .toast-icon::before { content: '✅'; }
+    .toast.error   .toast-icon::before { content: '⚠️'; }
+    .toast.sending .toast-icon::before { content: '📨'; }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a class="nav-logo" href="index.html">GETIN</a>
+    <div class="nav-right">
+      <a class="nav-link" href="#">Trending</a>
+      <a class="nav-link" href="#">This Week</a>
+      <button class="nav-btn-create">Create Event</button>
+      <button class="nav-lang">
+        <img src="http://localhost:3845/assets/c53193de42c31207446c93f30a01fa7f5f91de10.svg" alt="" width="15" height="10" />
+        EN
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+  <a class="back-btn" href="index.html" title="Back to home">
+    <svg viewBox="0 0 9 18" fill="none"><path d="M8 1L1 9L8 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <div class="success-card">
+    <div class="success-headline">
+      <p>🎉 Woohoo!</p>
+      <p>🎟️ Your Ticket is Locked In!</p>
+    </div>
+    <div class="event-info">
+      <div class="event-poster">
+        <img src="http://localhost:3845/assets/5b16b9ef65540b4787060316d03af8e95b95e3a4.png" alt="Black Coffee - Tirana" />
+      </div>
+      <a href="#" class="terms-link">Terms &amp; Conditions</a>
+      <div class="detail-row" style="margin-top:20px;">
+        <img src="http://localhost:3845/assets/ebe10d9b9a8816456dbfea29894487e14564afaa.svg" alt="" />
+        <span>8R7G+X98, Tiranë, Albania</span>
+      </div>
+      <div class="detail-row">
+        <img src="http://localhost:3845/assets/e81420c241da50372f9a5bf3b93fce19bd064278.svg" alt="" />
+        <span>6/13/26, 6:00 PM</span>
+      </div>
+    </div>
+    <div class="app-cta">
+      <div class="app-cta-texts">
+        <p class="app-cta-title">Your Ticket Awaits! Check-in Now in the Mobile App</p>
+        <p class="app-cta-desc">
+          Your tickets are ready and waiting! For a smooth and secure experience, you can<br>
+          view them exclusively in our mobile app. Download the app now for instant access.
+        </p>
+      </div>
+      <div class="store-btns">
+        <a class="store-btn" href="#">
+          <div class="store-btn-icon"><img src="http://localhost:3845/assets/857a2ac21f4e3db929e9ef476cbc015b930190e0.svg" alt="Google Play" /></div>
+          <div class="store-btn-text"><span class="get-it">Get it on</span><span class="store-name">Google Play</span></div>
+        </a>
+        <a class="store-btn" href="#">
+          <div class="store-btn-icon"><img src="http://localhost:3845/assets/5e15bfa4f916a0dc8971f28d706a89db96865c55.svg" alt="App Store" /></div>
+          <div class="store-btn-text"><span class="get-it">Download on the</span><span class="store-name">App Store</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANDALA CLUB CARD -->
+  <div class="mandala-card">
+    <img class="mandala-logo" src="http://localhost:3845/assets/6a6bce55f80ed74993d49bca10b88200d1bea8ea.svg" alt="Mandala Club" />
+    <p class="mandala-confirm">You're officially on the list<br>Mandala Club has been confirmed.</p>
+    <div class="mandala-film">
+      <img src="http://localhost:3845/assets/383c68b1093892a1293fbe5e0c8dd10d59e1bf38.png" alt="Mandala Club" />
+    </div>
+    <p class="mandala-tagline">
+      <span class="gold">Los miembros entran primero.</span> <span style="color:#fff;">Siempre.</span>
+    </p>
+    <p class="mandala-creds" id="mandalaCredsDisplay">
+      Usuario: —<br>Contraseña: —
+    </p>
+    <div class="mandala-benefits">
+      <div class="benefit-item"><span class="benefit-label" style="color:#8bd391;">BOLETOS</span><span class="benefit-desc">Exclusive member experiences</span></div>
+      <div class="benefit-item"><span class="benefit-label" style="color:#fbbe00;">VIAJES</span><span class="benefit-desc">Especial prices and surprises</span></div>
+      <div class="benefit-item"><span class="benefit-label" style="color:#f67b9b;">EXPERIENCIAS</span><span class="benefit-desc">Early access to Zamna tickets</span></div>
+      <div class="benefit-item"><span class="benefit-label" style="color:#61c1db;">TRIVIAS</span><span class="benefit-desc">Especial prices and surprises</span></div>
+      <div class="benefit-item"><span class="benefit-label" style="color:#b26eb8;">BENEFICIOS</span><span class="benefit-desc">Especial prices and surprises</span></div>
+    </div>
+    <button class="btn-explore-mandala" onclick="exploreMandala()">Explore Mandala Club</button>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon"></span>
+  <div class="toast-body">
+    <strong id="toastTitle"></strong>
+    <span id="toastMsg"></span>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────
+  // ⚙️  CONFIGURACIÓN EMAILJS  – rellena estos 4 valores
+  // ─────────────────────────────────────────────
+  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';          // En Account → API Keys
+  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID';          // En Email Services
+  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';         // En Email Templates
+  const ADMIN_EMAIL         = 'tu@email.com';           // Tu propio email para recibir copia
+  // ─────────────────────────────────────────────
+
+  // Leer datos guardados al comprar
+  const buyerName  = localStorage.getItem('getin_buyer_name')   || 'Guest';
+  const buyerEmail = localStorage.getItem('getin_buyer_email')  || '';
+  const orderNum   = localStorage.getItem('getin_order_number') || '---';
+  const orderDate  = localStorage.getItem('getin_order_date')   || new Date().toLocaleString();
+
+  // ── Toast helper ──────────────────────────────
+  function showToast(type, title, msg, duration = 5000) {
+    const t = document.getElementById('toast');
+    t.className = 'toast ' + type;
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMsg').textContent   = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── Email HTML template ───────────────────────
+  function buildEmail(name, email, orderNumber, date) {
+    return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#000000;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#000;">
+  <tr><td align="center" style="padding:60px 0 20px;">
+    <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+      <!-- LOGO -->
+      <tr><td align="center" style="padding-bottom:30px;">
+        <span style="font-family:Arial,sans-serif;font-size:28px;font-weight:900;color:#fff;letter-spacing:2px;">◉ GETIN</span>
+      </td></tr>
+
+      <!-- TITLE -->
+      <tr><td align="center" style="padding:10px 25px;">
+        <span style="font-size:24px;color:#fff;text-transform:uppercase;letter-spacing:1px;">YOUR TICKETS ARE READY! 🎉</span>
+      </td></tr>
+
+      <!-- SUBTITLE -->
+      <tr><td align="center" style="padding:12px 25px 6px;">
+        <p style="font-size:16px;color:#979797;text-align:center;margin:0;line-height:24px;">
+          Make sure to have your ticket ready at the entrance. You can access it anytime through your account on our platform.
+        </p>
+      </td></tr>
+      <tr><td align="center" style="padding:6px 25px 30px;">
+        <p style="font-size:16px;color:#979797;text-align:center;margin:0;line-height:24px;">
+          If you have any questions or need assistance, please don't hesitate to reach out to our support team. Enjoy the event!
+        </p>
+      </td></tr>
+
+      <!-- TICKET CARD -->
+      <tr><td align="center" style="padding:0 25px 16px;">
+        <table cellpadding="0" cellspacing="0" style="width:282px;background:#fff;border-radius:8px;overflow:hidden;">
+          <tr><td style="padding:16px;">
+            <div style="width:250px;height:220px;background:linear-gradient(135deg,#1a0a0a 0%,#4a0808 40%,#8b1010 70%,#c41e1e 100%);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-size:48px;">🎵</span>
+            </div>
+          </td></tr>
+          <tr><td style="padding:4px 16px 2px;background:#fff;">
+            <p style="font-size:20px;font-weight:700;color:#000;text-transform:uppercase;margin:0;">TERMS &amp; CONDITIONS</p>
+          </td></tr>
+          <tr><td style="padding:2px 16px 4px;background:#fff;">
+            <span style="font-size:14px;color:#000;text-transform:uppercase;">SAT, JUN 13 </span>
+            <span style="font-size:14px;color:#ff281b;font-weight:700;">6:00 PM</span>
+          </td></tr>
+          <tr><td style="padding:2px 16px 16px;background:#fff;">
+            <span style="background:#ff281b;color:#fff;font-size:8px;padding:3px 10px;border-radius:50px;letter-spacing:1px;text-transform:uppercase;margin-right:6px;">AGE LIMIT 18+</span>
+            <span style="background:#000;color:#fff;font-size:8px;padding:3px 10px;border-radius:50px;letter-spacing:1px;text-transform:uppercase;">GENERAL - FASE 2</span>
+          </td></tr>
+        </table>
+      </td></tr>
+
+      <!-- VIEW TICKET BUTTON -->
+      <tr><td align="center" style="padding:16px 25px 25px;">
+        <a href="#" style="background:#fff;color:#000;padding:10px 30px;border-radius:50px;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;display:inline-block;">VIEW TICKET</a>
+      </td></tr>
+
+      <!-- CONGRATS BANNER -->
+      <tr><td style="padding:0 0 30px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr><td style="background:#333;border-radius:16px 16px 0 0;padding:8px;text-align:center;">
+            <p style="font-size:16px;color:#fff;margin:0;">Congratulations ${name || 'there'}!</p>
+          </td></tr>
+          <tr><td style="background:#333;border-radius:0 0 16px 16px;padding:8px;text-align:center;">
+            <p style="font-size:16px;color:#fff;margin:0;">Your ticket is now available</p>
+          </td></tr>
+        </table>
+      </td></tr>
+
+      <!-- ORDER SUMMARY -->
+      <tr><td align="center" style="padding-bottom:12px;">
+        <p style="font-size:20px;color:#fff;margin:0;">Order Summary</p>
+      </td></tr>
+      <tr><td style="padding:0 0 30px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#333;border-radius:16px;overflow:hidden;">
+          <tr>
+            <td style="padding:10px 6px 10px 40px;width:220px;color:#979797;font-size:14px;">Full Name</td>
+            <td style="padding:10px 6px;color:#fff;font-size:14px;">${name || '—'}</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 6px 40px;color:#979797;font-size:14px;">Ticket type</td>
+            <td style="padding:6px;color:#fff;font-size:14px;">General - Fase 2</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 6px 40px;color:#979797;font-size:14px;">Amount</td>
+            <td style="padding:6px;color:#fff;font-size:14px;">1</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 10px 40px;color:#979797;font-size:14px;">Total</td>
+            <td style="padding:6px 6px 10px;color:#fff;font-size:14px;">€52.02</td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- BILLING DETAILS -->
+      <tr><td align="center" style="padding:0 0 12px;">
+        <p style="font-size:20px;color:#fff;margin:0;">Billing Details</p>
+      </td></tr>
+      <tr><td style="padding:0 0 30px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background:#333;border-radius:16px;overflow:hidden;">
+          <tr>
+            <td style="padding:10px 6px 6px 40px;width:220px;color:#979797;font-size:14px;">Full Name</td>
+            <td style="padding:10px 6px 6px;color:#fff;font-size:14px;">${name || '—'}</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 6px 40px;color:#979797;font-size:14px;">Email</td>
+            <td style="padding:6px;font-size:14px;"><a href="mailto:${email}" style="color:#1155cc;text-decoration:underline;">${email}</a></td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 6px 40px;color:#979797;font-size:14px;">Transaction Date</td>
+            <td style="padding:6px;color:#fff;font-size:14px;">${date}</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 6px 10px 40px;color:#979797;font-size:14px;">Order Number</td>
+            <td style="padding:6px 6px 10px;color:#fff;font-size:14px;">${orderNumber}</td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- BUTTONS -->
+      <tr><td align="center" style="padding-bottom:40px;">
+        <table cellpadding="0" cellspacing="0"><tr>
+          <td style="padding:0 20px;">
+            <a href="#" style="background:#fff;color:#000;padding:8px 30px;border-radius:50px;text-decoration:none;font-size:14px;display:inline-block;">My Account</a>
+          </td>
+          <td style="padding:0 20px;">
+            <a href="#" style="background:#fff;color:#000;padding:8px 30px;border-radius:50px;text-decoration:none;font-size:14px;display:inline-block;">Help Center</a>
+          </td>
+        </tr></table>
+      </td></tr>
+
+      <!-- FOOTER -->
+      <tr><td align="center" style="padding:20px 0 10px;">
+        <p style="font-size:24px;color:#fff;letter-spacing:2px;margin:0 0 16px;">FOLLOW US ON</p>
+        <p style="font-size:18px;margin:0 0 20px;">📸 🎵 💼 ▶️ 𝕏 📘 🎮</p>
+        <p style="font-size:13px;color:#fff;">You're receiving this email because you signed up for updates from © Getin 2026.</p>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+  }
+
+  // ── Send email ────────────────────────────────
+  async function sendConfirmationEmail() {
+    if (!buyerEmail) return;
+
+    // Verifica que las keys estén configuradas
+    if (EMAILJS_PUBLIC_KEY === 'TU_PUBLIC_KEY') {
+      showToast('error', 'EmailJS no configurado',
+        'Rellena las 4 variables de configuración en success.html para activar el envío.', 8000);
+      return;
+    }
+
+    showToast('sending', 'Enviando confirmación…', 'Estamos enviando tu ticket a ' + buyerEmail);
+
+    try {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+      const htmlContent = buildEmail(buyerName, buyerEmail, orderNum, orderDate);
+      const params = {
+        to_name:      buyerName,
+        to_email:     buyerEmail,
+        subject:      '🎟️ Your Tickets are Ready – Black Coffee · Tirana',
+        html_message: htmlContent,
+        reply_to:     'noreply@getin.com',
+      };
+
+      // Enviar al comprador
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+
+      // Enviar copia al admin
+      if (ADMIN_EMAIL && ADMIN_EMAIL !== 'tu@email.com') {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          ...params,
+          to_name:  'Admin GETIN',
+          to_email: ADMIN_EMAIL,
+          subject:  '[COPIA] 🎟️ Ticket vendido – ' + buyerName + ' · Black Coffee Tirana',
+        });
+      }
+
+      showToast('success', '¡Email enviado!', 'Confirmación enviada a ' + buyerEmail, 6000);
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      showToast('error', 'Error al enviar',
+        'No se pudo enviar el email. Revisa las credenciales de EmailJS.', 8000);
+    }
+  }
+
+  // Disparar al cargar la página
+  window.addEventListener('load', sendConfirmationEmail);
+
+  // ── Mandala Club email template ───────────────
+  function buildMandalaEmail(name, email, username, password) {
+    return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#17191f;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#17191f;">
+  <tr><td align="center" style="padding:50px 0 30px;">
+    <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+      <!-- LOGO -->
+      <tr><td align="center" style="padding-bottom:8px;">
+        <span style="font-family:Arial,sans-serif;font-size:26px;font-weight:900;color:#fff;letter-spacing:3px;">◉ MANDALA CLUB</span>
+      </td></tr>
+
+      <!-- TAGLINE -->
+      <tr><td align="center" style="padding-bottom:32px;">
+        <span style="font-size:13px;color:#b09a6b;letter-spacing:2px;text-transform:uppercase;">Los miembros entran primero. Siempre.</span>
+      </td></tr>
+
+      <!-- HERO IMAGE placeholder -->
+      <tr><td align="center" style="padding:0 20px 32px;">
+        <div style="width:100%;max-width:560px;height:260px;background:linear-gradient(135deg,#1c1228 0%,#2d1b4e 40%,#4a2060 70%,#6b2d8b 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <span style="font-size:80px;">🎬</span>
+        </div>
+      </td></tr>
+
+      <!-- WELCOME TEXT -->
+      <tr><td align="center" style="padding:0 25px 12px;">
+        <p style="font-size:22px;color:#fff;margin:0;font-weight:700;">Bienvenido, ${name}</p>
+      </td></tr>
+      <tr><td align="center" style="padding:0 25px 28px;">
+        <p style="font-size:15px;color:#9ca3af;text-align:center;margin:0;line-height:24px;">
+          Tu membresía en Mandala Club ha sido confirmada. A continuación encontrarás tus credenciales de acceso.
+        </p>
+      </td></tr>
+
+      <!-- CREDENTIALS CARD -->
+      <tr><td align="center" style="padding:0 25px 28px;">
+        <table cellpadding="0" cellspacing="0" style="width:100%;max-width:460px;background:#1e2028;border:1px solid #2e3042;border-radius:10px;">
+          <tr><td style="padding:24px 28px;">
+            <p style="font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 16px;">Tus credenciales</p>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding-bottom:12px;">
+                  <span style="font-size:13px;color:#6b7280;display:block;margin-bottom:4px;">Usuario</span>
+                  <span style="font-size:15px;color:#e5e7eb;font-weight:600;">${username}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="font-size:13px;color:#6b7280;display:block;margin-bottom:4px;">Contraseña</span>
+                  <span style="font-size:15px;color:#e5e7eb;font-weight:600;font-family:monospace;background:#2a2d3a;padding:4px 10px;border-radius:4px;">${password}</span>
+                </td>
+              </tr>
+            </table>
+          </td></tr>
+        </table>
+      </td></tr>
+
+      <!-- BENEFITS -->
+      <tr><td align="center" style="padding:0 25px 28px;">
+        <table cellpadding="0" cellspacing="0" style="width:100%;max-width:460px;">
+          <tr>
+            <td style="padding:10px;background:#1e2028;border-radius:8px;text-align:center;">
+              <span style="font-size:11px;color:#8bd391;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;">BOLETOS</span>
+              <span style="font-size:12px;color:#9ca3af;">Acceso anticipado</span>
+            </td>
+            <td width="8"></td>
+            <td style="padding:10px;background:#1e2028;border-radius:8px;text-align:center;">
+              <span style="font-size:11px;color:#fbbe00;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;">VIAJES</span>
+              <span style="font-size:12px;color:#9ca3af;">Escapadas exclusivas</span>
+            </td>
+            <td width="8"></td>
+            <td style="padding:10px;background:#1e2028;border-radius:8px;text-align:center;">
+              <span style="font-size:11px;color:#f67b9b;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;">EXPERIENCIAS</span>
+              <span style="font-size:12px;color:#9ca3af;">VIP &amp; backstage</span>
+            </td>
+          </tr>
+          <tr><td colspan="5" height="8"></td></tr>
+          <tr>
+            <td style="padding:10px;background:#1e2028;border-radius:8px;text-align:center;">
+              <span style="font-size:11px;color:#61c1db;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;">TRIVIAS</span>
+              <span style="font-size:12px;color:#9ca3af;">Gana premios</span>
+            </td>
+            <td width="8"></td>
+            <td colspan="3" style="padding:10px;background:#1e2028;border-radius:8px;text-align:center;">
+              <span style="font-size:11px;color:#b26eb8;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:3px;">BENEFICIOS</span>
+              <span style="font-size:12px;color:#9ca3af;">Descuentos &amp; sorpresas</span>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+
+      <!-- CTA BUTTON -->
+      <tr><td align="center" style="padding:0 25px 50px;">
+        <a href="https://www.mandalaclub.click/" style="display:inline-block;background:#fff;color:#17191f;font-size:15px;font-weight:700;text-decoration:none;padding:14px 44px;border-radius:50px;letter-spacing:0.5px;">Entrar a Mandala Club →</a>
+      </td></tr>
+
+      <!-- FOOTER -->
+      <tr><td align="center" style="padding:24px 25px;border-top:1px solid #2e3042;">
+        <p style="font-size:12px;color:#4b5563;margin:0;text-align:center;">
+          © 2025 Mandala Club · <a href="https://www.mandalaclub.click/" style="color:#4b5563;">mandalaclub.click</a>
+        </p>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+  }
+
+  // ── Explore Mandala Club handler ──────────────
+  async function exploreMandala() {
+    // Generate random password
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
+    let password = '';
+    for (let i = 0; i < 10; i++) password += chars[Math.floor(Math.random() * chars.length)];
+
+    const username = buyerEmail || 'guest@getin.com';
+
+    // Update credentials display on page
+    const credsEl = document.getElementById('mandalaCredsDisplay');
+    if (credsEl) {
+      credsEl.innerHTML = 'Usuario: <strong>' + username + '</strong><br>Contraseña: <strong style="font-family:monospace;background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:4px;">' + password + '</strong>';
+    }
+
+    // Send Mandala Club welcome email if EmailJS is configured
+    if (EMAILJS_PUBLIC_KEY !== 'TU_PUBLIC_KEY' && buyerEmail) {
+      try {
+        const htmlContent = buildMandalaEmail(buyerName, buyerEmail, username, password);
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_name:      buyerName,
+          to_email:     buyerEmail,
+          subject:      '🎉 Bienvenido a Mandala Club – Tus credenciales',
+          html_message: htmlContent,
+          reply_to:     'noreply@mandalaclub.click',
+        });
+        showToast('success', '¡Bienvenido a Mandala Club!', 'Te enviamos tus credenciales a ' + buyerEmail, 6000);
+      } catch (err) {
+        console.error('Mandala email error:', err);
+        showToast('error', 'Error al enviar', 'No se pudo enviar el email de Mandala Club.', 6000);
+      }
+    }
+
+    // Open Mandala Club in a new tab
+    window.open('https://www.mandalaclub.click/', '_blank');
+  }
+</script>
+
+</body>
+</html>

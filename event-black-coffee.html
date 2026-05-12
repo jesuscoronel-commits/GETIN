@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Black Coffee - Tirana | GETIN</title>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-ExtraLight.ttf'); font-weight: 200; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Light.ttf'); font-weight: 300; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Medium.ttf'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-ExtraBold.ttf'); font-weight: 800; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Black.ttf'); font-weight: 900; font-style: normal; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── STICKY TOP BAR ─────────────────────────────── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #000;
+      border-bottom: 1px solid #1c1d21;
+      height: 68px;
+    }
+    .top-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 20px;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      color: #fff;
+    }
+    .back-btn svg {
+      width: 10px;
+      height: 16px;
+    }
+    .top-bar-tickets {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+    .get-tickets-bar {
+      width: 320px;
+      height: 52px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0.62;
+      transition: opacity 0.2s;
+    }
+    .get-tickets-bar:hover { opacity: 1; }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff;
+      color: #11152b;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      flex-shrink: 0;
+      letter-spacing: -0.24px;
+    }
+    .lang-btn img { height: 9.8px; width: 15px; }
+
+    /* ── MAIN CONTENT ───────────────────────────────── */
+    .page-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    /* LEFT: poster */
+    .poster-col {
+      flex-shrink: 0;
+      width: 420px;
+      padding: 12px 39px 0;
+      position: sticky;
+      top: 100px;
+    }
+    .poster-wrap {
+      width: 342px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 4px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .poster-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* RIGHT: details */
+    .details-col {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 39px 0;
+    }
+
+    /* Event title */
+    .event-title {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 48px;
+      margin-bottom: 18px;
+    }
+
+    /* Tags row */
+    .tags-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tag-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #fff;
+    }
+    .tag-item img { width: 24px; height: 24px; object-fit: contain; }
+
+    /* Meta rows */
+    .meta-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .meta-item img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
+    .meta-item span {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.16px;
+      white-space: nowrap;
+      color: #fff;
+    }
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .date-range span { font-size: 16px; letter-spacing: 0.16px; color: #fff; }
+
+    /* Action buttons */
+    .action-btns {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-calendar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-calendar img { width: 10px; height: 10px; }
+    .btn-share {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #0e0f11;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-share img { width: 24px; height: 24px; }
+
+    /* GET TICKETS main button */
+    .get-tickets-main {
+      width: 100%;
+      height: 68px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s;
+    }
+    .get-tickets-main:hover { opacity: 0.9; }
+    .get-tickets-main img { width: 16px; height: 16px; }
+
+    /* Section title */
+    .section-title {
+      border-bottom: 1px solid #1c1d21;
+      padding: 10px 0 11px;
+      margin-bottom: 16px;
+    }
+    .section-title h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 24px;
+    }
+
+    /* About text */
+    .about-text {
+      font-size: 15.6px;
+      font-weight: 400;
+      line-height: 23.4px;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .about-text p { margin-bottom: 23px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { font-weight: 700; }
+
+    /* Venue map image */
+    .venue-map {
+      width: 100%;
+      max-width: 562px;
+      height: 366px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .venue-map img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Video card */
+    .video-card {
+      width: 183px;
+      height: 336px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .video-card img.video-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(26,26,26,0.77) 0%, rgba(14,15,17,1) 50%, rgba(14,15,17,0.8) 100%);
+    }
+    .video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .video-play img { width: 24px; height: 24px; }
+
+    /* Info rows (18+, doors, refund) */
+    .info-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .info-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .info-row img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; margin-top: 2px; }
+    .info-row-text {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.16px;
+      color: #fff;
+    }
+    .info-row-text .indent { padding-left: 20px; }
+
+    /* Lineup */
+    .lineup-section { margin-bottom: 32px; }
+    .artist-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px;
+    }
+    .artist-info { display: flex; align-items: center; gap: 10px; }
+    .artist-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .artist-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .artist-name { font-size: 14px; font-weight: 400; line-height: 19.6px; }
+    .follow-btn {
+      width: 110px;
+      height: 36px;
+      background: #000;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 50px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Venue section */
+    .venue-section { margin-bottom: 32px; }
+    .venue-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .venue-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+    .venue-left img.pin { width: 24px; height: 24px; }
+    .venue-name { font-size: 18px; font-weight: 600; }
+    .venue-right { display: flex; align-items: center; gap: 16px; }
+    .btn-maps {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      color: #080416;
+      border: none;
+      border-radius: 50px;
+      padding: 7px 10px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      height: 34px;
+    }
+    .btn-maps img { width: 10px; height: 10px; }
+    .venue-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 32px;
+      overflow: hidden;
+    }
+    .venue-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Promoter */
+    .promoter-section { margin-bottom: 48px; }
+    .promoter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .promoter-left { display: flex; align-items: center; gap: 15px; flex: 1; }
+    .promoter-avatar { width: 50px; height: 50px; border-radius: 25px; overflow: hidden; }
+    .promoter-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .promoter-name { font-size: 18px; font-weight: 600; }
+    .promoter-right { display: flex; align-items: center; gap: 15px; }
+    .btn-follow-dark {
+      background: #0e0f11;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 34px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      height: 36px;
+    }
+    .btn-contact {
+      width: 40px;
+      height: 40px;
+      background: #0e0f11;
+      border: none;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn-contact img { width: 24px; height: 24px; }
+
+    /* App banner */
+    .app-banner {
+      border: 1px solid #1c1d21;
+      border-radius: 16px;
+      background: linear-gradient(-38.9deg, #000 75.44%, #151515 100%);
+      display: flex;
+      height: 460px;
+      overflow: hidden;
+      position: relative;
+    }
+    .app-banner-left {
+      flex: 0 0 308px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      position: relative;
+      z-index: 2;
+    }
+    .app-banner-glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 160px;
+      background: radial-gradient(circle, rgba(255,40,27,1) 0%, rgba(255,40,27,0.74) 57.8%, rgba(255,40,27,0.04) 95.8%);
+      top: -42px;
+      left: 0;
+      pointer-events: none;
+    }
+    .app-banner-headline {
+      position: relative;
+      z-index: 1;
+    }
+    .app-banner-headline h2 {
+      font-size: 38px;
+      font-weight: 500;
+      line-height: 44px;
+      text-transform: uppercase;
+    }
+    .app-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 16px;
+    }
+    .app-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .app-feature img { width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px; }
+    .app-feature p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    }
+    .store-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border-radius: 30px;
+      padding: 6px 10px;
+      width: fit-content;
+    }
+    .store-badges img { height: 20px; width: auto; }
+    .store-divider {
+      width: 1px;
+      height: 14px;
+      background: #000;
+    }
+    .app-banner-right {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-top: 16px;
+    }
+    .app-banner-right img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      object-position: bottom right;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── STICKY TOP BAR ── -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a class="back-btn" href="index.html" title="Back">
+      <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1L1.5 8L8.5 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <div class="top-bar-tickets">
+      <button class="get-tickets-bar" onclick="window.location.href='event-select-tickets.html'">
+        GET TICKETS
+        <img src="http://localhost:3845/assets/d8a1d9f24209cc860bde13199547f9638e0c5c6c.svg" alt="" style="width:16px;height:16px;" />
+      </button>
+    </div>
+    <button class="lang-btn">
+      <span>EN</span>
+      <img src="http://localhost:3845/assets/5841cd9323d0cf459332d5fe0e0c4c966a3aa588.svg" alt="EN flag" />
+    </button>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="page-content">
+
+  <!-- LEFT: Poster -->
+  <div class="poster-col">
+    <div class="poster-wrap">
+      <img src="http://localhost:3845/assets/610aeaeede1df2ba2ca303068189735565917f29.png" alt="Black Coffee - Tirana poster" />
+    </div>
+  </div>
+
+  <!-- RIGHT: Details -->
+  <div class="details-col">
+
+    <!-- Title -->
+    <h1 class="event-title">Black Coffee - Tirana</h1>
+
+    <!-- Tags -->
+    <div class="tags-row">
+      <div class="tag-item">
+        <img src="http://localhost:3845/assets/0192a3d42b7bf846959fea56ee7f6fc984ff109b.svg" alt="" />
+        <span>Techno</span>
+      </div>
+      <div class="tag-item">
+        <img src="http://localhost:3845/assets/87925b630371df6b6fa6f954bb39df64100c1260.svg" alt="" />
+        <span>Pacha</span>
+      </div>
+      <div class="tag-item">
+        <img src="http://localhost:3845/assets/e8b9bd4e36c19de9cd28fd5c8959c216bed2f31e.svg" alt="" />
+        <span>Nightlife</span>
+      </div>
+    </div>
+
+    <!-- Meta: location + date -->
+    <div class="meta-rows">
+      <div class="meta-row">
+        <div class="meta-item">
+          <img src="http://localhost:3845/assets/2142705c0af14d9c69233ae71d3c12f820073ff3.svg" alt="" />
+          <span>Tiranë</span>
+        </div>
+        <div class="meta-item">
+          <img src="http://localhost:3845/assets/b83a6d686a539e9bc99283accd805d3e5c875be3.svg" alt="" />
+          <div class="date-range">
+            <span>Thu, Jun 4, 6:00 PM</span>
+            <span>-</span>
+            <span>Fri, Jun 5, 2:00 AM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-btns">
+      <button class="btn-calendar">
+        Add to Calendar
+        <img src="http://localhost:3845/assets/6bcce3fcd6c641ec56173545862e070c9a088736.svg" alt="" />
+      </button>
+      <button class="btn-share">
+        Share
+        <img src="http://localhost:3845/assets/a400c528e5281b9059d328716999ae5d8c39d825.svg" alt="" />
+      </button>
+    </div>
+
+    <!-- GET TICKETS main -->
+    <button class="get-tickets-main" onclick="window.location.href='event-select-tickets.html'">
+      GET TICKETS
+      <img src="http://localhost:3845/assets/3381bebf2fe7248001d08e8f39c583359d6b956d.svg" alt="" />
+    </button>
+
+    <!-- About -->
+    <div class="section-title"><h3>About</h3></div>
+    <div class="about-text">
+      <p>On June 4, Black Coffee comes to Tirana for a special open-air night at the <strong>Athletic Field</strong>, presented by SONO International.</p>
+      <p>Known for his deep, emotional sound and unique blend of house and African rhythms, Black Coffee has built a global reputation for sets that connect with the crowd on a different level. From Ibiza to Coachella, his shows carry a feeling that stays with you.</p>
+      <p>This time, it happens in Tirana. Open air, summer night, one of the most respected artists in the world behind the decks.</p>
+      <p><strong>+2 special guests (TBA)</strong></p>
+      <p>June 4, 2026<br>Athletic Field, Tirana<br>Open Air</p>
+    </div>
+
+    <!-- Venue map image -->
+    <div class="venue-map">
+      <img src="http://localhost:3845/assets/a8bc86538561df5f4ab0f91e60e88bda44207a10.png" alt="Venue map" />
+    </div>
+
+    <!-- Video -->
+    <div class="video-card">
+      <img class="video-thumb" src="http://localhost:3845/assets/035ee627832c606498309d272e0f0f5ead3d8084.png" alt="Black Coffee video" />
+      <div class="video-overlay"></div>
+      <div class="video-play">
+        <img src="http://localhost:3845/assets/8ce3cb6f933b102e7ba6fa41b63471dd0173eca1.svg" alt="Play" />
+      </div>
+    </div>
+
+    <!-- Info rows -->
+    <div class="info-rows">
+      <div class="info-row">
+        <img src="http://localhost:3845/assets/c75ef365d5e69517750ea5d27936697db4656ce4.svg" alt="" />
+        <div class="info-row-text">This is a 18+ event.</div>
+      </div>
+      <div class="info-row">
+        <img src="http://localhost:3845/assets/23756c0af8edaaf108ccf3ab49860b404fde6623.svg" alt="" />
+        <div class="info-row-text">Doors open at 6:00 PM</div>
+      </div>
+      <div class="info-row">
+        <img src="http://localhost:3845/assets/5b9c008860dffad09549fec1270c29c6939a5881.svg" alt="" style="width:20px;height:20px;margin-top:4px;" />
+        <div class="info-row-text">
+          You can get a refund if:<br>
+          <span class="indent">This event is rescheduled or cancelled</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lineup -->
+    <div class="lineup-section">
+      <div class="section-title"><h3>Lineup</h3></div>
+      <div class="artist-row">
+        <div class="artist-info">
+          <div class="artist-avatar">
+            <img src="http://localhost:3845/assets/c6703d2ef2cf8586cbfeefcc862f167347072139.png" alt="Black Coffee" />
+          </div>
+          <span class="artist-name">Black Coffee</span>
+        </div>
+        <button class="follow-btn">Follow</button>
+      </div>
+    </div>
+
+    <!-- Venue -->
+    <div class="venue-section">
+      <div class="section-title"><h3>Venue</h3></div>
+      <div class="venue-row">
+        <div class="venue-left">
+          <img class="pin" src="http://localhost:3845/assets/2142705c0af14d9c69233ae71d3c12f820073ff3.svg" alt="" />
+          <span class="venue-name">Athletic Field</span>
+        </div>
+        <div class="venue-right">
+          <button class="btn-maps">
+            Open In Maps
+            <img src="http://localhost:3845/assets/6bcce3fcd6c641ec56173545862e070c9a088736.svg" alt="" />
+          </button>
+          <div class="venue-thumb">
+            <img src="http://localhost:3845/assets/9ce7ebabddb98e1db841ff25a786f84efb01c0bb.png" alt="Athletic Field" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promoter -->
+    <div class="promoter-section">
+      <div class="section-title"><h3>Promoter</h3></div>
+      <div class="promoter-row">
+        <div class="promoter-left">
+          <div class="promoter-avatar">
+            <img src="http://localhost:3845/assets/3e3467d8c4f610250fc5846f0136fa1a821fd2ed.png" alt="Sono International" />
+          </div>
+          <span class="promoter-name">Sono International</span>
+        </div>
+        <div class="promoter-right">
+          <button class="btn-follow-dark">Follow</button>
+          <button class="btn-contact">
+            <img src="http://localhost:3845/assets/a3b519503176a4a046891b1725c02ec1caed7b68.svg" alt="Contact" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Banner -->
+    <div class="app-banner">
+      <div class="app-banner-left">
+        <div class="app-banner-glow"></div>
+        <div class="app-banner-headline">
+          <h2>NEW APP.<br>NEW VIBES.</h2>
+        </div>
+        <div class="app-features">
+          <div class="app-feature">
+            <img src="http://localhost:3845/assets/156edde193befbb200af11e99e23141bcd4300fe.svg" alt="" />
+            <p>Discover the best events happening around you, with recommendations shaped by what you love.</p>
+          </div>
+          <div class="app-feature">
+            <img src="http://localhost:3845/assets/d0286343bc6fa93abca86b772fa3deec5a93a253.svg" alt="" style="width:20px;height:19px;" />
+            <p>Save events, plan with friends, and keep your tickets organised in one place.</p>
+          </div>
+          <div class="app-feature">
+            <img src="http://localhost:3845/assets/15c623935b105195a21b4fa564e2834c1f4cbc0c.svg" alt="" />
+            <p>If an event sells out or plans change, join the Waiting List or transfer your ticket easily.</p>
+          </div>
+        </div>
+        <div class="store-badges">
+          <img src="http://localhost:3845/assets/4e4482d9aecad2b86e82cc593b1e22c9da189905.svg" alt="App Store" style="height:20px;width:16px;" />
+          <div class="store-divider"></div>
+          <img src="http://localhost:3845/assets/a3d2d7ce80131ac18a6e700455c03694f2148c89.svg" alt="Google Play" style="height:19px;width:16px;" />
+        </div>
+      </div>
+      <div class="app-banner-right">
+        <img src="http://localhost:3845/assets/fe49e3f15724092e0f45ba91d4fdbff6982c04df.png" alt="App mockup" />
+      </div>
+    </div>
+
+  </div><!-- /details-col -->
+</div><!-- /page-content -->
+
+</body>
+</html>

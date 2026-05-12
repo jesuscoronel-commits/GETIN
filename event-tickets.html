@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Tickets – Black Coffee - Tirana | GETIN</title>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Medium.ttf'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; font-style: normal; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ──────────────────────────────────── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #000;
+      border-bottom: 1px solid #1c1d21;
+      height: 68px;
+    }
+    .top-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      color: #fff;
+    }
+    .back-btn svg { width: 10px; height: 16px; }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff;
+      color: #11152b;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      letter-spacing: -0.24px;
+    }
+    .lang-btn img { height: 9.8px; width: 15px; }
+
+    /* ── MAIN LAYOUT ──────────────────────────────── */
+    .page-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+      display: flex;
+      align-items: flex-start;
+      min-height: calc(100vh - 68px);
+    }
+
+    /* LEFT: poster + event info */
+    .left-col {
+      flex-shrink: 0;
+      width: 420px;
+      padding: 12px 39px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .poster-wrap {
+      width: 342px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 4px rgba(0,0,0,0.25);
+    }
+    .poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .event-brief { display: flex; flex-direction: column; gap: 6px; }
+    .event-brief h1 {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 48px;
+    }
+    .event-brief .address {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+    }
+    .event-brief .date {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 36px;
+    }
+    .tags-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding-top: 30px;
+      flex-wrap: wrap;
+    }
+    .tag-item { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 400; }
+    .tag-item img { width: 24px; height: 24px; object-fit: contain; }
+
+    /* RIGHT: login form */
+    .right-col {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 39px 0;
+      display: flex;
+      align-items: flex-start;
+      align-self: flex-start;
+    }
+    .form-card {
+      width: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.13), rgba(255,255,255,0.01));
+      border-radius: 20px;
+      padding: 14px 15px 28px;
+    }
+
+    /* Form heading */
+    .form-heading {
+      font-family: 'Montserrat', 'Mona Sans', sans-serif;
+      font-size: 25px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 39px;
+      margin-bottom: 15px;
+    }
+
+    /* Tabs */
+    .form-tabs {
+      display: flex;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255,255,255,0.13);
+      margin-bottom: 30px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 10px 11px;
+      font-family: 'Montserrat', 'Mona Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: #a29bb1;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .tab.active {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+      margin-bottom: -1px;
+    }
+
+    /* Phone input row */
+    .phone-field {
+      border-bottom: 1px solid rgba(255,255,255,0.31);
+      margin-bottom: 7px;
+      padding-bottom: 1px;
+    }
+    .phone-input-row {
+      display: flex;
+      align-items: center;
+      padding: 12px 6px 12px 0;
+      gap: 0;
+    }
+    .flag-selector {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      user-select: none;
+    }
+    .flag-selector .flag-emoji { font-size: 18px; line-height: 1; }
+    .flag-selector .dial-code { font-size: 14px; color: #fff; font-family: 'Mona Sans', sans-serif; }
+    .flag-selector .chevron {
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #fff;
+      margin-left: 2px;
+      transition: transform 0.2s;
+    }
+    .flag-selector.open .chevron { transform: rotate(180deg); }
+
+    /* Country dropdown */
+    .country-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: #1c1d21;
+      border: 1px solid #333;
+      border-radius: 8px;
+      width: 240px;
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+    .flag-selector.open .country-dropdown { display: block; }
+    .country-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      transition: background 0.15s;
+    }
+    .country-option:hover { background: #2a2b30; }
+    .country-option.selected { background: #2a2b30; }
+    .country-option .opt-flag { font-size: 18px; flex-shrink: 0; }
+    .country-option .opt-name { flex: 1; }
+    .country-option .opt-code { color: #a29bb1; flex-shrink: 0; }
+    .phone-number {
+      background: none;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      padding-left: 6px;
+      flex: 1;
+    }
+    .phone-number::placeholder { color: rgba(255,255,255,0.4); }
+
+    /* Email tab */
+    .email-field-wrap { padding: 24px 0 16px; }
+    .email-label {
+      display: block;
+      font-size: 12px;
+      color: #a29bb1;
+      margin-bottom: 6px;
+      font-family: 'Mona Sans', sans-serif;
+    }
+    .email-input-row {
+      border-bottom: 1px solid rgba(255,255,255,0.31);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .email-input {
+      background: none; border: none; outline: none;
+      color: #fff; font-family: 'Mona Sans', sans-serif;
+      font-size: 14px; width: 100%;
+    }
+    .email-input::placeholder { color: rgba(255,255,255,0.3); }
+    .password-hint {
+      font-size: 11px; color: #a29bb1; margin-bottom: 12px;
+      font-family: 'Mona Sans', sans-serif;
+    }
+    .password-link { color: #a78bfa; font-weight: 600; text-decoration: none; }
+    .password-link:hover { text-decoration: underline; }
+
+    /* Smart Access / Face ID tab */
+    .smartaccess-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 8px 20px;
+      text-align: center;
+    }
+    .smartaccess-title {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .smartaccess-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      color: #a29bb1;
+      line-height: 22px;
+      max-width: 300px;
+    }
+    .btn-device-access {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 350px;
+      height: 60px;
+      background: #efefef;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-device-access:hover { opacity: 0.9; }
+    .btn-device-icon {
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-device-icon img { width: 16px; height: 16px; }
+    .btn-device-label {
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #000;
+      letter-spacing: 0.56px;
+    }
+    .smartaccess-register {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      font-size: 16px;
+    }
+    .smartaccess-register .haven { color: #fff; }
+    .smartaccess-register .register-link {
+      color: #b8a6cc;
+      text-decoration: none;
+    }
+    .smartaccess-register .register-link:hover { text-decoration: underline; }
+
+    /* Mandala promo */
+    .mandala-promo { margin-top: 24px; }
+    .mandala-img { width: 100%; max-width: 342px; height: 201px; border-radius: 12px; overflow: hidden; margin-bottom: 15px; }
+    .mandala-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mandala-title { font-size: 36px; font-weight: 600; line-height: 48px; margin-bottom: 12px; }
+    .mandala-subtitle { font-size: 24px; font-weight: 600; line-height: 36px; margin-bottom: 12px; }
+    .mandala-desc { font-size: 15px; font-weight: 600; line-height: 26px; margin-bottom: 12px; }
+    .mandala-checkbox { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; }
+    .mandala-check-input { display: none; }
+    .mandala-check-box {
+      width: 22px; height: 22px; flex-shrink: 0;
+      border-radius: 5px;
+      border: 1.5px solid #555;
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .mandala-check-input:checked + .mandala-check-box {
+      background: #2563eb;
+      border-color: #2563eb;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 13px;
+    }
+    .mandala-checkbox span { font-size: 16px; font-weight: 400; line-height: 20px; }
+
+    /* ── GUEST INFO FORM ─────────────────────────── */
+    .guest-info-card {
+      display: none;
+      width: 100%;
+    }
+    .guest-info-card.visible { display: block; }
+
+    .guest-section {
+      border: 1px solid #1c1d21;
+      border-radius: 8px;
+      padding: 21px;
+      margin-bottom: 10px;
+    }
+    .guest-section-title {
+      font-size: 16.8px;
+      font-weight: 400;
+      color: #fff;
+      padding: 0 15px;
+      margin-bottom: 4px;
+    }
+    .guest-input-wrap { padding: 16px 0; }
+    .guest-input {
+      width: 100%;
+      height: 56px;
+      background: #0e0f11;
+      border: 1px solid #1c1d21;
+      border-radius: 5px;
+      padding: 0 17px;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 16px;
+      outline: none;
+    }
+    .guest-input::placeholder { color: #b5b6ba; }
+    .guest-input:focus { border-color: #444; }
+
+    .gender-label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      margin-bottom: 4px;
+    }
+    .gender-label-row img { width: 24px; height: 24px; }
+    .gender-label-row span { font-size: 16px; color: #fff; }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .radio-option input[type="radio"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #444748;
+      border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .radio-option input[type="radio"]:checked {
+      border-color: #fff;
+    }
+    .radio-option input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .radio-option label { font-size: 16px; color: #fff; cursor: pointer; }
+
+    .btn-continue-guest {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 68px;
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 15px 5px;
+      mix-blend-mode: hard-light;
+      transition: opacity 0.2s;
+      margin-bottom: 10px;
+    }
+    .btn-continue-guest:hover { opacity: 0.9; }
+    .btn-continue-guest .btn-label {
+      flex: 1;
+      padding-left: 10px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11152b;
+      text-align: left;
+    }
+    .btn-continue-guest .btn-badge {
+      border-left: 1px solid #a29bb1;
+      padding: 0 10px;
+      min-width: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .btn-badge .badge-tickets {
+      font-size: 11px;
+      color: #a29bb1;
+      white-space: nowrap;
+    }
+    .btn-badge .badge-price {
+      font-size: 12px;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .guest-terms {
+      font-size: 11px;
+      line-height: 22px;
+      color: #a29bb1;
+      padding: 0 10px;
+    }
+    .guest-terms a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── PAYMENT FORM ───────────────────────────── */
+    .payment-card {
+      display: none;
+      width: 100%;
+    }
+    .payment-card.visible { display: block; }
+
+    .payment-timer {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .payment-secure {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .payment-secure .lock-icon { color: #22c55e; font-size: 14px; }
+    .payment-secure .secure-text {
+      font-size: 13px;
+      color: #22c55e;
+      flex: 1;
+    }
+    .payment-secure .chevron-down {
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #22c55e;
+    }
+
+    .payment-field { margin-bottom: 0; }
+    .payment-label {
+      display: block;
+      font-size: 12px;
+      color: #a29bb1;
+      margin-bottom: 6px;
+      font-family: 'Mona Sans', sans-serif;
+    }
+    .payment-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .payment-input {
+      width: 100%;
+      height: 52px;
+      background: #0e0f11;
+      border: 1px solid #1c1d21;
+      border-radius: 5px;
+      padding: 0 44px 0 14px;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .payment-input::placeholder { color: #555; }
+    .payment-input:focus { border-color: #444; }
+
+    .card-brand-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .visa-badge {
+      background: #1a1f71;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      font-style: italic;
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+    .cvc-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    .cvc-icon svg { opacity: 0.5; }
+
+    .payment-field-label {
+      display: block;
+      font-size: 12px;
+      color: #a29bb1;
+      margin-bottom: 6px;
+      font-family: 'Mona Sans', sans-serif;
+    }
+    .payment-card-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .payment-two-col {
+      display: flex;
+      gap: 12px;
+    }
+    .payment-two-col > div { flex: 1; }
+
+    /* Link expanded section */
+    .link-section {
+      display: none;
+      background: #111318;
+      border: 1px solid #2a2b30;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 0;
+      animation: fadeInDown 0.25s ease;
+    }
+    .link-section.visible { display: block; }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .link-field { margin-bottom: 14px; }
+    .link-input {
+      width: 100%;
+      height: 52px;
+      background: #1c1d21;
+      border: 1px solid #2a2b30;
+      border-radius: 6px;
+      padding: 0 14px;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .link-input:focus { border-color: #22c55e; }
+    .link-input::placeholder { color: #555; }
+    .link-suggestion {
+      font-size: 12px;
+      color: #22c55e;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+    .link-phone-row {
+      display: flex;
+      align-items: center;
+      height: 52px;
+      background: #1c1d21;
+      border: 1px solid #2a2b30;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .link-phone-flag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 10px;
+      cursor: pointer;
+      flex-shrink: 0;
+      border-right: 1px solid #2a2b30;
+      height: 100%;
+      font-size: 18px;
+      user-select: none;
+    }
+    .link-phone-flag .chevron-xs {
+      width: 0; height: 0;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      border-top: 4px solid #888;
+      margin-left: 2px;
+    }
+    .link-phone-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 15px;
+      padding: 0 14px;
+    }
+    .link-phone-input::placeholder { color: #555; }
+    .link-select {
+      width: 100%;
+      height: 52px;
+      background: #1c1d21;
+      border: 1px solid #2a2b30;
+      border-radius: 6px;
+      padding: 0 14px;
+      color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer;
+    }
+    .link-select option { background: #1c1d21; }
+    .link-terms {
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 17px;
+      margin-bottom: 14px;
+    }
+    .link-terms a { color: #6b7280; text-decoration: underline; }
+    .link-logo { color: #22c55e; font-weight: 700; }
+
+    .btn-pay-initial {
+      display: block;
+      width: 100%;
+    }
+
+    .payment-save {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .payment-save input[type="checkbox"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1px solid #555;
+      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 1px;
+      position: relative;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .payment-save input[type="checkbox"]:checked {
+      background: #fff;
+      border-color: #fff;
+    }
+    .payment-save input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 2px;
+      width: 5px; height: 9px;
+      border: 2px solid #000;
+      border-top: none; border-left: none;
+      transform: rotate(45deg);
+    }
+    .payment-save label {
+      font-size: 12px;
+      color: #a29bb1;
+      line-height: 18px;
+      cursor: pointer;
+    }
+
+    .btn-pay {
+      width: 100%;
+      height: 52px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      mix-blend-mode: hard-light;
+      transition: opacity 0.2s;
+    }
+    .btn-pay:hover { opacity: 0.9; }
+
+    /* Terms text */
+    .terms-text {
+      font-size: 11px;
+      line-height: 16.5px;
+      color: #c4c4c4;
+      margin-bottom: 0;
+    }
+    .terms-text a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Continue button */
+    .form-actions {
+      padding: 16px 0;
+    }
+    .btn-continue {
+      width: 100%;
+      height: 56px;
+      background: #fff;
+      color: #11152b;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Mona Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      mix-blend-mode: hard-light;
+      transition: opacity 0.2s;
+    }
+    .btn-continue:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a class="back-btn" href="event-select-tickets.html" title="Back">
+      <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1L1.5 8L8.5 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <button class="lang-btn">
+      <span>EN</span>
+      <img src="http://localhost:3845/assets/5841cd9323d0cf459332d5fe0e0c4c966a3aa588.svg" alt="EN flag" />
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-content">
+
+  <!-- LEFT: poster + event brief -->
+  <div class="left-col">
+    <div class="poster-wrap">
+      <img src="http://localhost:3845/assets/610aeaeede1df2ba2ca303068189735565917f29.png" alt="Black Coffee - Tirana" />
+    </div>
+    <div class="event-brief">
+      <h1>Black Coffee - Tirana</h1>
+      <p class="address">8R7G+X98, Tiranë, Albania</p>
+      <p class="date">Jun 4, 2026</p>
+      <div class="tags-row">
+        <div class="tag-item">
+          <img src="http://localhost:3845/assets/0192a3d42b7bf846959fea56ee7f6fc984ff109b.svg" alt="" />
+          <span>Techno</span>
+        </div>
+        <div class="tag-item">
+          <img src="http://localhost:3845/assets/6a88e20c2fabae3dfda86674f9b2b1126198a09a.svg" alt="" />
+          <span>Pacha</span>
+        </div>
+        <div class="tag-item">
+          <img src="http://localhost:3845/assets/e8b9bd4e36c19de9cd28fd5c8959c216bed2f31e.svg" alt="" />
+          <span>Nightlife</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mandala Club promo -->
+    <div class="mandala-promo">
+      <div class="mandala-img">
+        <img src="http://localhost:3845/assets/bbaf5979008d3364b5d9f91830c756e6507f1020.png" alt="Mandala Club" />
+      </div>
+      <p class="mandala-title">Suscríbete ahora en Mandala Club</p>
+      <p class="mandala-subtitle">Haz la prueba ahora y obtén 15 días completamente grátis</p>
+      <p class="mandala-desc">Obtén boletos grátis para todos los eventos, experiencias únicas y las mejores noticias de espectáculos y entretenimientos,</p>
+      <label class="mandala-checkbox">
+        <input type="checkbox" class="mandala-check-input" checked />
+        <span class="mandala-check-box"></span>
+        <span>Acepto suscribirme a Mandala Club</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- RIGHT: login form / guest info -->
+  <div class="right-col">
+
+    <!-- GUEST INFO (shown after Continue on phone/email) -->
+    <div class="guest-info-card" id="guestInfoCard">
+      <div class="guest-section">
+        <p class="guest-section-title">You</p>
+        <div class="guest-input-wrap">
+          <input class="guest-input" type="text" placeholder="Name" />
+        </div>
+        <div class="guest-input-wrap" style="padding-top:0;">
+          <input class="guest-input" type="email" placeholder="Email" />
+        </div>
+        <div class="guest-input-wrap" style="padding-top:0;">
+          <input class="guest-input" type="text" placeholder="Date of Birth" />
+        </div>
+        <div style="padding: 24px 0 8px;">
+          <div class="gender-label-row">
+            <img src="http://localhost:3845/assets/265fca9fb434b642fe44d0dd3137c137fe0eb3ff.svg" alt="" />
+            <span>Gender</span>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gender-female" />
+            <label for="gender-female">Female</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gender-male" />
+            <label for="gender-male">Male</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="gender" id="gender-other" />
+            <label for="gender-other">Other</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-continue-guest">
+        <span class="btn-label">Continue</span>
+        <div class="btn-badge">
+          <span class="badge-tickets" id="guestBadgeTickets">1 ticket</span>
+          <span class="badge-price" id="guestBadgePrice">€45</span>
+        </div>
+      </button>
+
+      <p class="guest-terms">
+        By purchasing you agree to our general
+        <a href="#">Terms of Use</a>,
+        <a href="#">Privacy Policy</a> and the
+        <a href="#">Ticket Purchase Terms</a>.
+        We process your personal data in accordance with our <a href="#">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <!-- PAYMENT (shown after Continue on guest info) -->
+    <div class="payment-card" id="paymentCard">
+      <div class="payment-timer"><span id="timerDisplay">14:41</span></div>
+
+      <div class="payment-secure">
+        <span class="lock-icon">🔒</span>
+        <span class="secure-text">Proceso de compra seguro y rápido con Link</span>
+        <div class="chevron-down"></div>
+      </div>
+
+      <!-- Card fields with labels -->
+      <div class="payment-card-fields">
+        <div>
+          <label class="payment-field-label">Número de tarjeta</label>
+          <div class="payment-input-wrap">
+            <input class="payment-input" type="text" id="cardNumber"
+              placeholder="1234 1234 1234 1234" maxlength="19"
+              oninput="formatCardNumber(this); checkCardComplete()" />
+            <span class="card-brand-icon" id="cardBrandIcon">
+              <span class="visa-badge">VISA</span>
+            </span>
+          </div>
+        </div>
+        <div class="payment-two-col">
+          <div>
+            <label class="payment-field-label">Caducidad (MM/AA)</label>
+            <div class="payment-input-wrap">
+              <input class="payment-input" type="text" id="expiryInput"
+                placeholder="MM / AA" maxlength="7"
+                oninput="formatExpiry(this); checkCardComplete()" />
+            </div>
+          </div>
+          <div>
+            <label class="payment-field-label">Código de seguridad</label>
+            <div class="payment-input-wrap">
+              <input class="payment-input" type="text" id="cvcInput"
+                placeholder="CVC" maxlength="4"
+                oninput="this.value=this.value.replace(/\D/g,''); checkCardComplete()" />
+              <span class="cvc-icon">
+                <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+                  <rect x="1" y="1" width="20" height="14" rx="2" stroke="#888" stroke-width="1.5"/>
+                  <rect x="1" y="4" width="20" height="3" fill="#888"/>
+                  <rect x="3" y="10" width="6" height="2" rx="1" fill="#888"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save checkbox -->
+      <div class="payment-save">
+        <input type="checkbox" id="savePayment" />
+        <label for="savePayment">Guardar los datos de pago en GET-IN UK LTD para futuras compras</label>
+      </div>
+
+      <!-- Link expanded section (shown when card fields are complete) -->
+      <div class="link-section" id="linkSection">
+        <div class="link-field">
+          <label class="payment-field-label">Correo electrónico</label>
+          <input class="link-input" type="email" id="linkEmail"
+            placeholder="correo@ejemplo.com"
+            oninput="checkEmailSuggestion(this)" />
+          <p class="link-suggestion" id="emailSuggestion" style="display:none;"></p>
+        </div>
+        <div class="link-field">
+          <label class="payment-field-label">Número de móvil (opcional)</label>
+          <div class="link-phone-row">
+            <div class="link-phone-flag">
+              <span>🇲🇽</span>
+              <div class="chevron-xs"></div>
+            </div>
+            <input class="link-phone-input" type="tel" placeholder="55 8359 6022" />
+          </div>
+        </div>
+        <div class="link-field">
+          <label class="payment-field-label">Nombre completo (opcional)</label>
+          <input class="link-input" type="text" placeholder="Tu nombre completo" />
+        </div>
+        <div class="link-field">
+          <label class="payment-field-label">País de facturación</label>
+          <select class="link-select">
+            <option value="MX">México</option>
+            <option value="US">Estados Unidos</option>
+            <option value="ES">España</option>
+            <option value="AR">Argentina</option>
+            <option value="CO">Colombia</option>
+            <option value="CL">Chile</option>
+            <option value="PE">Perú</option>
+            <option value="BR">Brasil</option>
+            <option value="AL">Albania</option>
+            <option value="DE">Alemania</option>
+            <option value="FR">Francia</option>
+            <option value="IT">Italia</option>
+            <option value="GB">Reino Unido</option>
+          </select>
+        </div>
+        <p class="link-terms">
+          <span class="link-logo">🔗 link</span> • Al proporcionar tu número de teléfono, acepto crear una cuenta de Link y guardar mis datos de pago en Link, conforme a las <a href="#">Condiciones</a> y la <a href="#">Política de privacidad</a>.
+        </p>
+        <button class="btn-pay" onclick="handlePay()">PAY</button>
+      </div>
+
+      <!-- PAY inicial (oculto cuando aparece link section) -->
+      <div class="btn-pay-initial" id="payBtnWrap">
+        <button class="btn-pay" onclick="handlePay()">PAY</button>
+      </div>
+    </div>
+
+    <div class="form-card" id="loginCard">
+      <p class="form-heading">Login / Sign Up</p>
+
+      <!-- Tabs -->
+      <div class="form-tabs">
+        <div class="tab active" data-tab="phone">Login with phone</div>
+        <div class="tab" data-tab="email">Login with email</div>
+        <div class="tab" data-tab="faceid">Touch / Face ID</div>
+      </div>
+
+      <!-- TAB: Phone -->
+      <div class="tab-panel" id="panel-phone">
+        <div class="phone-field">
+          <div class="phone-input-row">
+            <div class="flag-selector" id="flagSelector" onclick="toggleDropdown(event)">
+              <span class="flag-emoji" id="selectedFlag">🇲🇽</span>
+              <span class="dial-code" id="selectedCode">+52</span>
+              <div class="chevron"></div>
+              <div class="country-dropdown" id="countryDropdown"></div>
+            </div>
+            <input class="phone-number" id="phoneInput" type="tel" placeholder="55 8359 6022" value="55 8359 6022" />
+          </div>
+        </div>
+        <p class="terms-text">
+          By purchasing you'll receive an account, and agree to our general
+          <a href="#">Terms of Use</a>,
+          <a href="#">Privacy Policy</a> and the
+          <a href="#">Ticket Purchase Terms</a>.
+          We process your personal data in accordance with our Privacy Policy.
+        </p>
+        <div class="form-actions">
+          <button class="btn-continue">Continue</button>
+        </div>
+      </div>
+
+      <!-- TAB: Email -->
+      <div class="tab-panel" id="panel-email" style="display:none;">
+        <div class="email-field-wrap">
+          <label class="email-label">Email</label>
+          <div class="email-input-row">
+            <input class="email-input" type="email" placeholder="email" />
+          </div>
+          <p class="password-hint">
+            Looking for the password?&nbsp;<a href="#" class="password-link">Click to use password</a>
+          </p>
+        </div>
+        <p class="terms-text">
+          By purchasing you'll receive an account, and agree to our general
+          <a href="#">Terms of Use</a>,
+          <a href="#">Privacy Policy</a> and the
+          <a href="#">Ticket Purchase Terms</a>.
+          We process your personal data in accordance with our Privacy Policy.
+        </p>
+        <div class="form-actions">
+          <button class="btn-continue">Continue</button>
+        </div>
+      </div>
+
+      <!-- TAB: Touch / Face ID -->
+      <div class="tab-panel" id="panel-faceid" style="display:none;">
+        <div class="smartaccess-wrap">
+          <p class="smartaccess-title">Smart Access</p>
+          <p class="smartaccess-subtitle">Sign in to your account easily and securely with Touch ID, Face ID, Pattern or Pin</p>
+          <button class="btn-device-access">
+            <div class="btn-device-icon">
+              <img src="http://localhost:3845/assets/7c9b55bc4b2dc0ef4a62f58ed969d9bd7d314f89.svg" alt="passkey" />
+            </div>
+            <span class="btn-device-label">Proceed using Device Access</span>
+          </button>
+          <p class="terms-text" style="max-width:320px; margin-top:8px;">
+            By continuing, you agree to
+            <a href="#">Getin General Terms and Conditions</a> and
+            <a href="#">Privacy Policy</a>.
+          </p>
+          <div class="smartaccess-register">
+            <span class="haven">Haven't met yet?</span>
+            <a href="#" class="register-link">Register here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const panelId = 'panel-' + tab.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+      document.getElementById(panelId).style.display = 'block';
+    });
+  });
+
+  // Continue → show guest info form
+  document.querySelectorAll('#panel-phone .btn-continue, #panel-email .btn-continue').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('loginCard').style.display = 'none';
+      document.getElementById('guestInfoCard').classList.add('visible');
+    });
+  });
+
+  // Guest info Continue → show payment form
+  document.querySelector('.btn-continue-guest').addEventListener('click', () => {
+    document.getElementById('guestInfoCard').style.display = 'none';
+    const pc = document.getElementById('paymentCard');
+    pc.classList.add('visible');
+    startTimer();
+  });
+
+  // Countdown timer
+  function startTimer() {
+    let total = 14 * 60 + 41;
+    const el = document.getElementById('timerDisplay');
+    const tick = setInterval(() => {
+      if (total <= 0) { clearInterval(tick); el.textContent = '00:00'; return; }
+      total--;
+      const m = String(Math.floor(total / 60)).padStart(2, '0');
+      const s = String(total % 60).padStart(2, '0');
+      el.textContent = m + ':' + s;
+    }, 1000);
+  }
+
+  // Detect when all card fields are complete → show link section
+  function checkCardComplete() {
+    const num = document.getElementById('cardNumber').value.replace(/\s/g, '');
+    const exp = document.getElementById('expiryInput').value.replace(/\s/g, '');
+    const cvc = document.getElementById('cvcInput').value;
+    const complete = num.length === 16 && exp.length >= 4 && cvc.length >= 3;
+    const linkSection = document.getElementById('linkSection');
+    const payWrap = document.getElementById('payBtnWrap');
+    if (complete) {
+      linkSection.classList.add('visible');
+      payWrap.style.display = 'none';
+    } else {
+      linkSection.classList.remove('visible');
+      payWrap.style.display = 'block';
+    }
+  }
+
+  // Email domain suggestion
+  function checkEmailSuggestion(input) {
+    const val = input.value;
+    const el = document.getElementById('emailSuggestion');
+    const atIdx = val.indexOf('@');
+    if (atIdx === -1) { el.style.display = 'none'; return; }
+    const domain = val.slice(atIdx + 1);
+    const common = { 'gamil.com':'gmail.com', 'gmai.com':'gmail.com', 'gmial.com':'gmail.com',
+                     'hotmial.com':'hotmail.com', 'hotmil.com':'hotmail.com',
+                     'yaho.com':'yahoo.com', 'yahooo.com':'yahoo.com',
+                     'outlok.com':'outlook.com', 'outloo.com':'outlook.com' };
+    const parts = domain.split('.');
+    if (common[domain]) {
+      el.textContent = '¿Quisiste decir @' + common[domain] + '?';
+      el.style.display = 'block';
+      el.onclick = () => {
+        input.value = val.slice(0, atIdx + 1) + common[domain];
+        el.style.display = 'none';
+      };
+    } else if (parts.length >= 3) {
+      const simpler = parts.slice(-2).join('.');
+      el.textContent = '¿Quisiste decir @' + simpler + '?';
+      el.style.display = 'block';
+      el.onclick = () => {
+        input.value = val.slice(0, atIdx + 1) + simpler;
+        el.style.display = 'none';
+      };
+    } else {
+      el.style.display = 'none';
+    }
+  }
+
+  // Card number formatting (groups of 4)
+  function formatCardNumber(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+    // detect brand
+    const icon = document.getElementById('cardBrandIcon');
+    if (/^4/.test(v)) {
+      icon.innerHTML = '<span class="visa-badge">VISA</span>';
+    } else if (/^5[1-5]/.test(v) || /^2[2-7]/.test(v)) {
+      icon.innerHTML = '<span style="color:#eb001b;font-size:18px;font-weight:900;">●</span><span style="color:#f79e1b;font-size:18px;font-weight:900;margin-left:-6px;">●</span>';
+    } else if (/^3[47]/.test(v)) {
+      icon.innerHTML = '<span style="color:#2e77bc;font-size:11px;font-weight:700;background:#fff;padding:2px 5px;border-radius:3px;">AMEX</span>';
+    } else {
+      icon.innerHTML = '<span class="visa-badge">VISA</span>';
+    }
+  }
+
+  // Expiry formatting MM / AA
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 3) {
+      input.value = v.substring(0, 2) + ' / ' + v.substring(2);
+    } else if (v.length === 2 && !input.value.includes('/')) {
+      input.value = v + ' / ';
+    } else {
+      input.value = v;
+    }
+  }
+
+  // Country data
+  const countries = [
+    { flag: '🇲🇽', name: 'México',           code: '+52'  },
+    { flag: '🇺🇸', name: 'United States',    code: '+1'   },
+    { flag: '🇬🇧', name: 'United Kingdom',   code: '+44'  },
+    { flag: '🇪🇸', name: 'España',           code: '+34'  },
+    { flag: '🇦🇷', name: 'Argentina',        code: '+54'  },
+    { flag: '🇨🇴', name: 'Colombia',         code: '+57'  },
+    { flag: '🇨🇱', name: 'Chile',            code: '+56'  },
+    { flag: '🇵🇪', name: 'Perú',             code: '+51'  },
+    { flag: '🇻🇪', name: 'Venezuela',        code: '+58'  },
+    { flag: '🇧🇷', name: 'Brasil',           code: '+55'  },
+    { flag: '🇫🇷', name: 'France',           code: '+33'  },
+    { flag: '🇩🇪', name: 'Germany',          code: '+49'  },
+    { flag: '🇮🇹', name: 'Italy',            code: '+39'  },
+    { flag: '🇵🇹', name: 'Portugal',         code: '+351' },
+    { flag: '🇳🇱', name: 'Netherlands',      code: '+31'  },
+    { flag: '🇧🇪', name: 'Belgium',          code: '+32'  },
+    { flag: '🇨🇭', name: 'Switzerland',      code: '+41'  },
+    { flag: '🇦🇹', name: 'Austria',          code: '+43'  },
+    { flag: '🇸🇪', name: 'Sweden',           code: '+46'  },
+    { flag: '🇳🇴', name: 'Norway',           code: '+47'  },
+    { flag: '🇩🇰', name: 'Denmark',          code: '+45'  },
+    { flag: '🇵🇱', name: 'Poland',           code: '+48'  },
+    { flag: '🇷🇺', name: 'Russia',           code: '+7'   },
+    { flag: '🇹🇷', name: 'Turkey',           code: '+90'  },
+    { flag: '🇬🇷', name: 'Greece',           code: '+30'  },
+    { flag: '🇦🇱', name: 'Albania',          code: '+355' },
+    { flag: '🇨🇦', name: 'Canada',           code: '+1'   },
+    { flag: '🇦🇺', name: 'Australia',        code: '+61'  },
+    { flag: '🇯🇵', name: 'Japan',            code: '+81'  },
+    { flag: '🇰🇷', name: 'South Korea',      code: '+82'  },
+    { flag: '🇨🇳', name: 'China',            code: '+86'  },
+    { flag: '🇮🇳', name: 'India',            code: '+91'  },
+    { flag: '🇿🇦', name: 'South Africa',     code: '+27'  },
+    { flag: '🇪🇬', name: 'Egypt',            code: '+20'  },
+    { flag: '🇳🇬', name: 'Nigeria',          code: '+234' },
+    { flag: '🇦🇪', name: 'UAE',              code: '+971' },
+    { flag: '🇸🇦', name: 'Saudi Arabia',     code: '+966' },
+    { flag: '🇮🇱', name: 'Israel',           code: '+972' },
+  ];
+
+  let selectedCountry = countries[0];
+
+  // Build dropdown
+  const dropdown = document.getElementById('countryDropdown');
+  countries.forEach((c, i) => {
+    const opt = document.createElement('div');
+    opt.className = 'country-option' + (i === 0 ? ' selected' : '');
+    opt.innerHTML = `<span class="opt-flag">${c.flag}</span><span class="opt-name">${c.name}</span><span class="opt-code">${c.code}</span>`;
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectCountry(c, opt);
+    });
+    dropdown.appendChild(opt);
+  });
+
+  function selectCountry(c, optEl) {
+    selectedCountry = c;
+    document.getElementById('selectedFlag').textContent = c.flag;
+    document.getElementById('selectedCode').textContent = c.code;
+    dropdown.querySelectorAll('.country-option').forEach(o => o.classList.remove('selected'));
+    optEl.classList.add('selected');
+    closeDropdown();
+  }
+
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    const sel = document.getElementById('flagSelector');
+    sel.classList.toggle('open');
+  }
+
+  function closeDropdown() {
+    document.getElementById('flagSelector').classList.remove('open');
+  }
+
+  document.addEventListener('click', closeDropdown);
+
+  // Save buyer data and navigate to success
+  function handlePay() {
+    const name = document.querySelector('#linkSection input[placeholder="Tu nombre completo"]')?.value
+                || document.querySelector('#guestInfoCard input[placeholder="Name"]')?.value
+                || '';
+    const email = document.getElementById('linkEmail')?.value || '';
+    const phone = document.querySelector('.link-phone-input')?.value || '';
+    const orderNum = Math.floor(Math.random() * 9000000 + 1000000).toString();
+    const now = new Date();
+    const dateStr = now.getDate() + ' ' + now.toLocaleString('en-US',{month:'long'}) + ' ' + now.getFullYear()
+                    + ' - ' + now.toTimeString().slice(0,8);
+
+    localStorage.setItem('getin_buyer_name',  name);
+    localStorage.setItem('getin_buyer_email', email);
+    localStorage.setItem('getin_buyer_phone', phone);
+    localStorage.setItem('getin_order_number', orderNum);
+    localStorage.setItem('getin_order_date',   dateStr);
+
+    window.location.href = 'success.html';
+  }
+</script>
+
+</body>
+</html>
