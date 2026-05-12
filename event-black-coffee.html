@@ -623,7 +623,7 @@
       </svg>
     </a>
     <div class="top-bar-tickets">
-      <button class="get-tickets-bar" onclick="window.location.href='event-select-tickets.html'">
+      <button class="get-tickets-bar" onclick="window.location.href = localStorage.getItem('flow')==='B' ? 'event-select-tickets-b.html' : 'event-select-tickets.html'">
         GET TICKETS
         <img src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27/%3E" alt="" style="width:16px;height:16px;" />
       </button>
@@ -698,7 +698,7 @@
     </div>
 
     <!-- GET TICKETS main -->
-    <button class="get-tickets-main" onclick="window.location.href='event-select-tickets.html'">
+    <button class="get-tickets-main" onclick="window.location.href = localStorage.getItem('flow')==='B' ? 'event-select-tickets-b.html' : 'event-select-tickets.html'">
       GET TICKETS
       <img src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27/%3E" alt="" />
     </button>

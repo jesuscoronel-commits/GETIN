@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Tickets – Black Coffee - Tirana | GETIN</title>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Medium.ttf'); font-weight: 500; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #fff; font-family: 'Mona Sans', sans-serif; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: #000; border-bottom: 1px solid #1c1d21; height: 68px;
+    }
+    .top-bar-inner {
+      max-width: 1200px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+    }
+    .back-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; cursor: pointer; text-decoration: none; color: #fff;
+    }
+    .lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: #fff; color: #11152b; border: none; border-radius: 20px;
+      padding: 6px 10px; font-family: 'Mona Sans', sans-serif;
+      font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; letter-spacing: -0.24px;
+    }
+
+    /* ── LAYOUT ── */
+    .page-content {
+      max-width: 1200px; margin: 0 auto;
+      padding: 32px 20px 80px;
+      display: flex; align-items: flex-start; gap: 0;
+    }
+
+    /* ── LEFT COL ── */
+    .left-col { flex-shrink: 0; width: 420px; padding: 12px 39px 0; }
+    .poster-wrap { width: 342px; height: 420px; border-radius: 20px; overflow: hidden; box-shadow: 0 0 4px rgba(0,0,0,0.25); margin-bottom: 20px; }
+    .poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .event-brief { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+    .event-brief h1 { font-size: 36px; font-weight: 600; line-height: 48px; }
+    .event-brief .sub { font-size: 24px; font-weight: 600; line-height: 36px; }
+    .tags-row { display: flex; gap: 16px; align-items: center; padding-top: 30px; flex-wrap: wrap; }
+    .tag-item { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 400; }
+
+    /* Order Summary */
+    .order-summary { border-bottom: 1px solid #1c1d21; }
+    .order-summary-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0 9px; border-bottom: 1px solid #1c1d21; cursor: pointer;
+    }
+    .order-summary-header span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-summary-header .arrow { width: 11px; height: 6px; transition: transform 0.2s; }
+    .order-summary-header.collapsed .arrow { transform: rotate(180deg); }
+    .order-summary-body { padding-top: 20px; }
+    .order-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; }
+    .order-row span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-fees { display: flex; flex-direction: column; gap: 4px; margin-bottom: 20px; }
+    .order-fee-row { display: flex; align-items: center; justify-content: space-between; }
+    .order-fee-row span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-total { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; margin-bottom: 15px; }
+    .order-total span { font-size: 16px; font-weight: 400; line-height: 24px; }
+
+    /* Coupon */
+    .coupon-row {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #1c1d21; padding-bottom: 1px; margin-bottom: 24px;
+    }
+    .coupon-input {
+      background: none; border: none; outline: none; color: #fff;
+      font-family: 'Mona Sans', sans-serif; font-size: 16px;
+      padding: 11.5px 0; flex: 1;
+    }
+    .coupon-apply {
+      background: none; border: none; color: #fff; font-size: 16px;
+      font-family: 'Mona Sans', sans-serif; cursor: pointer; padding: 0;
+    }
+
+    /* Mandala Club promo (left col) */
+    .mandala-promo { display: flex; flex-direction: column; gap: 12px; }
+    .mandala-venue { width: 100%; height: 201px; border-radius: 12px; overflow: hidden; }
+    .mandala-venue img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mandala-promo-title { font-size: 36px; font-weight: 600; line-height: 48px; }
+    .mandala-promo-sub { font-size: 24px; font-weight: 600; line-height: 36px; }
+    .mandala-promo-desc { font-size: 15px; font-weight: 600; line-height: 26px; }
+    .mandala-checkbox-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; }
+    .mandala-cb { display: none; }
+    .mandala-cb-box {
+      width: 22px; height: 22px; flex-shrink: 0; border-radius: 5px;
+      border: 1.5px solid #555; background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .mandala-cb:checked + .mandala-cb-box {
+      background: #2563eb; border-color: #2563eb;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center; background-size: 13px;
+    }
+    .mandala-checkbox-row span { font-size: 16px; font-weight: 400; line-height: 20px; }
+
+    /* ── RIGHT COL ── */
+    .right-col {
+      flex: 1; min-width: 0; padding: 12px 39px 0;
+      display: flex; flex-direction: column; justify-content: flex-start;
+      align-self: flex-start;
+    }
+    .tickets-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+    /* Combo ticket (Mandala Club offer) */
+    .ticket-combo {
+      background: rgba(14,15,17,0.2); border-radius: 5px; padding: 10px;
+      display: none;
+    }
+    .ticket-combo.visible { display: block; }
+    .ticket-combo-header { padding: 0 10px 4px; }
+    .ticket-combo-name { font-size: 16px; font-weight: 700; line-height: 24px; }
+    .ticket-combo-sub { font-size: 13px; font-weight: 400; color: #aaa; line-height: 20px; }
+    .ticket-combo-powered { font-size: 13px; font-weight: 600; color: #ff9a4d; line-height: 20px; }
+
+    /* Regular ticket card */
+    .ticket-card { background: rgba(14,15,17,0.2); border-radius: 5px; padding: 10px; }
+    .ticket-name { font-size: 16px; font-weight: 700; line-height: 24px; padding: 0 10px 10px; }
+    .ticket-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+    .ticket-price {
+      background: #0fbe6a; color: #000; border-radius: 50px;
+      padding: 4px 20px; font-size: 14px; font-weight: 400; line-height: 19.6px;
+    }
+    .ticket-qty { display: flex; align-items: center; gap: 34px; }
+    .qty-btn {
+      width: 26px; height: 26px; border-radius: 5px; border: none;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .qty-btn.minus { background: #1c1d21; }
+    .qty-btn.plus  { background: #fff; }
+    .qty-num { font-size: 16px; font-weight: 500; line-height: 24px; min-width: 10px; text-align: center; }
+
+    .ticket-fine-print {
+      font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.5);
+      line-height: 18px; padding: 4px 10px 2px;
+    }
+
+    /* Continue button */
+    .continue-wrap { padding: 0 15px; }
+    .btn-continue-ticket {
+      width: 100%; height: 68px; background: #fff; color: #000; border: none;
+      border-radius: 8px; display: flex; align-items: center; cursor: pointer;
+      overflow: hidden;
+    }
+    .btn-continue-label {
+      flex: 1; text-align: center;
+      font-size: 20px; font-weight: 700; text-transform: capitalize; line-height: 30px;
+      padding-left: 15px;
+    }
+    .btn-continue-info {
+      border-left: 1px solid #a29bb1; height: 34.5px;
+      width: 58px; flex-shrink: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 10px;
+    }
+    .btn-continue-info .ticket-count { font-size: 11px; color: #a29bb1; line-height: 16.5px; white-space: nowrap; }
+    .btn-continue-info .ticket-price-sm { font-size: 12px; color: #000; line-height: 18px; white-space: nowrap; }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .top-bar { height: 56px; }
+      .top-bar-inner { padding: 0 16px; }
+      .page-content { flex-direction: column; padding: 16px 16px 100px; }
+      .left-col { width: 100%; padding: 0; }
+      .poster-wrap { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 12px; max-width: none; }
+      .event-brief h1 { font-size: 24px; line-height: 34px; }
+      .event-brief .sub { font-size: 18px; line-height: 28px; }
+      .mandala-promo-title { font-size: 24px; line-height: 34px; }
+      .mandala-promo-sub { font-size: 18px; line-height: 28px; }
+      .right-col { width: 100%; padding: 20px 0 0; }
+      .ticket-row { flex-wrap: wrap; gap: 12px; }
+      .ticket-qty { gap: 24px; }
+      .continue-wrap {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        padding: 10px 16px; background: #000;
+        border-top: 1px solid #1c1d21; z-index: 50;
+      }
+      .btn-continue-ticket { border-radius: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a class="back-btn" href="event-black-coffee.html">
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+        <path d="M8.5 1L1.5 8L8.5 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <button class="lang-btn">
+      <span>EN</span>
+      🏳️
+    </button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-content">
+
+  <!-- LEFT -->
+  <div class="left-col">
+    <div class="poster-wrap">
+      <img src="images/bc.png" alt="Black Coffee - Tirana" />
+    </div>
+
+    <div class="event-brief">
+      <h1>Black Coffee - Tirana</h1>
+      <p class="sub">8R7G+X98, Tiranë, Albania</p>
+      <p class="sub">Jun 4, 2026</p>
+      <div class="tags-row">
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          <span>Techno</span>
+        </div>
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#4f46e5;display:inline-block;"></span>
+          <span>Pacha</span>
+        </div>
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#dc2626;display:inline-block;"></span>
+          <span>Nightlife</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <div class="order-summary-header" id="summaryHeader" onclick="toggleSummary()">
+        <span>Order Summary</span>
+        <svg class="arrow" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1l4.5 4L10 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="order-summary-body" id="summaryBody">
+        <div class="order-row">
+          <span id="summaryLabel">1 x Phase 2 - General Tickets</span>
+          <span id="summaryPrice">€45.00</span>
+        </div>
+        <div class="order-fees">
+          <div class="order-fee-row"><span>Total Fees and Taxes:</span><span>€7.01</span></div>
+          <div class="order-fee-row"><span>Purchase fee:</span><span>€4.50</span></div>
+          <div class="order-fee-row"><span>Merchant Processing Fee:</span><span>€1.52</span></div>
+          <div class="order-fee-row"><span>Service Fee:</span><span>€1.00</span></div>
+        </div>
+        <div class="order-total"><span>Total:</span><span id="summaryTotal">€52.02</span></div>
+      </div>
+    </div>
+
+    <!-- Coupon -->
+    <div class="coupon-row">
+      <input class="coupon-input" type="text" placeholder="Coupon code" />
+      <button class="coupon-apply">APPLY</button>
+    </div>
+
+    <!-- Mandala Club promo -->
+    <div class="mandala-promo">
+      <div class="mandala-venue">
+        <img src="images/mandala-venue.png" alt="Mandala Club" />
+      </div>
+      <p class="mandala-promo-title">Suscríbete ahora en Mandala Club</p>
+      <p class="mandala-promo-sub">Haz la prueba ahora y obtén 15 días completamente grátis</p>
+      <p class="mandala-promo-desc">Obtén boletos grátis para todos los eventos, experiencias únicas y las mejores noticias de espectáculos y entretenimientos,</p>
+      <label class="mandala-checkbox-row">
+        <input type="checkbox" class="mandala-cb" id="mandalaSubscribe" checked />
+        <span class="mandala-cb-box"></span>
+        <span>Acepto suscribirme a Mandala Club</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-col">
+    <div class="tickets-list">
+
+      <!-- Combo: Phase 2 + Mandala Club (shown when Phase 2 qty > 0) -->
+      <div class="ticket-combo" id="comboCard">
+        <div class="ticket-combo-header">
+          <div class="ticket-combo-name">Phase 2 - General Tickets + Mandala Club Grátis</div>
+          <div class="ticket-combo-sub">Haz la prueba ahora y obtén 15 días completamente grátis</div>
+          <div class="ticket-combo-powered">Powered by UX</div>
+        </div>
+        <div class="ticket-row">
+          <span class="ticket-price">€45.00</span>
+          <div class="ticket-qty">
+            <button class="qty-btn minus" onclick="changeQty(this, -1, 'combo')">
+              <svg width="10" height="2" viewBox="0 0 10 2" fill="none"><path d="M1 1h8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="qty-num" id="comboQty">0</span>
+            <button class="qty-btn plus" onclick="changeQty(this, 1, 'combo')">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <p class="ticket-fine-print">Al continuar con la opción seleccionada aceptas suscribirte a Mandala Club</p>
+      </div>
+
+      <!-- Phase 2 - General Tickets -->
+      <div class="ticket-card">
+        <div class="ticket-name">Phase 2 - General Tickets</div>
+        <div class="ticket-row">
+          <span class="ticket-price">€45.00</span>
+          <div class="ticket-qty">
+            <button class="qty-btn minus" onclick="changeQty(this, -1, 0)">
+              <svg width="10" height="2" viewBox="0 0 10 2" fill="none"><path d="M1 1h8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="qty-num">1</span>
+            <button class="qty-btn plus" onclick="changeQty(this, 1, 0)">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIP Red -->
+      <div class="ticket-card">
+        <div class="ticket-name">VIP Red</div>
+        <div class="ticket-row">
+          <span class="ticket-price">€65.00</span>
+          <div class="ticket-qty">
+            <button class="qty-btn minus" onclick="changeQty(this, -1, 1)">
+              <svg width="10" height="2" viewBox="0 0 10 2" fill="none"><path d="M1 1h8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="qty-num">0</span>
+            <button class="qty-btn plus" onclick="changeQty(this, 1, 1)">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIP Blue -->
+      <div class="ticket-card">
+        <div class="ticket-name">VIP Blue</div>
+        <div class="ticket-row">
+          <span class="ticket-price">€65.00</span>
+          <div class="ticket-qty">
+            <button class="qty-btn minus" onclick="changeQty(this, -1, 2)">
+              <svg width="10" height="2" viewBox="0 0 10 2" fill="none"><path d="M1 1h8" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <span class="qty-num">0</span>
+            <button class="qty-btn plus" onclick="changeQty(this, 1, 2)">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5h8" stroke="black" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Continue -->
+    <div class="continue-wrap">
+      <button class="btn-continue-ticket" onclick="window.location.href='event-tickets.html'">
+        <span class="btn-continue-label">Continue</span>
+        <div class="btn-continue-info">
+          <span class="ticket-count" id="ticketCount">1 ticket</span>
+          <span class="ticket-price-sm" id="ticketTotal">€45</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const prices = { 0: 45, 1: 65, 2: 65, combo: 45 };
+  const qtys   = { 0: 1,  1: 0,  2: 0,  combo: 0  };
+
+  function changeQty(btn, delta, key) {
+    const qtyEl = btn.parentElement.querySelector('.qty-num');
+    let val = Math.max(0, parseInt(qtyEl.textContent) + delta);
+    qtyEl.textContent = val;
+    qtys[key] = val;
+
+    // Show/hide combo card based on Phase 2 qty
+    if (key === 0) {
+      const combo = document.getElementById('comboCard');
+      combo.classList.toggle('visible', val > 0);
+      if (val === 0) {
+        document.getElementById('comboQty').textContent = '0';
+        qtys['combo'] = 0;
+      }
+    }
+
+    updateTotals();
+  }
+
+  function updateTotals() {
+    let total = 0, count = 0;
+    for (const [k, q] of Object.entries(qtys)) {
+      total += q * prices[k];
+      count += q;
+    }
+    document.getElementById('ticketCount').textContent = count + (count === 1 ? ' ticket' : ' tickets');
+    document.getElementById('ticketTotal').textContent = '€' + total;
+  }
+
+  function toggleSummary() {
+    const header = document.getElementById('summaryHeader');
+    const body   = document.getElementById('summaryBody');
+    const isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    header.classList.toggle('collapsed', isOpen);
+  }
+</script>
+
+</body>
+</html>
