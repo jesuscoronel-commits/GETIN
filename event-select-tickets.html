@@ -172,27 +172,30 @@
         padding: 16px 16px 100px;
       }
 
-      /* Left col */
-      .left-col { width: 100%; padding: 0; }
+      /* Left col: use contents so children join page-content flex, enabling order */
+      .left-col { display: contents; }
       .poster-wrap {
         width: 100%;
         height: auto;
         aspect-ratio: 1 / 1;
         border-radius: 12px;
         max-width: none;
+        order: 1;
       }
 
       /* Event brief */
+      .event-brief { order: 2; }
       .event-brief h1 { font-size: 24px; line-height: 34px; }
       .event-brief .sub { font-size: 18px; line-height: 28px; }
 
-      /* Mandala promo */
+      /* Right col */
+      .right-col { width: 100%; padding: 20px 0 0; order: 3; }
+
+      /* Mandala promo: always last on mobile */
+      .mandala-promo { order: 99; width: 100%; }
       .mandala-title { font-size: 24px; line-height: 34px; }
       .mandala-subtitle { font-size: 18px; line-height: 28px; }
       .mandala-img { max-width: 100%; }
-
-      /* Right col */
-      .right-col { width: 100%; padding: 20px 0 0; }
 
       /* Ticket qty controls */
       .ticket-row { flex-wrap: wrap; gap: 12px; }

@@ -827,30 +827,29 @@
         min-height: unset;
       }
 
-      /* Left col: compact above form */
-      .left-col {
-        width: 100%;
-        padding: 0;
-        gap: 16px;
-      }
+      /* Left col: use contents so children join page-content flex, enabling order */
+      .left-col { display: contents; }
       .poster-wrap {
         width: 100%;
         height: auto;
         aspect-ratio: 1 / 1;
         border-radius: 12px;
         max-width: none;
+        order: 1;
       }
+      .event-brief { order: 2; }
       .event-brief h1 { font-size: 22px; line-height: 32px; }
       .event-brief .address,
       .event-brief .date { font-size: 16px; line-height: 24px; }
 
-      /* Mandala promo in left col */
+      /* Right col: full width form */
+      .right-col { width: 100%; padding: 20px 0 0; order: 3; }
+
+      /* Mandala promo: always last on mobile */
+      .mandala-promo { order: 99; width: 100%; }
       .mandala-title { font-size: 22px; line-height: 32px; }
       .mandala-subtitle { font-size: 16px; line-height: 24px; }
       .mandala-img { max-width: 100%; }
-
-      /* Right col: full width form */
-      .right-col { width: 100%; padding: 20px 0 0; }
       .form-card { border-radius: 12px; padding: 16px 14px 24px; }
       .form-heading { font-size: 20px; }
 
