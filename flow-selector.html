@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Flow | GETIN</title>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #000; color: #fff;
+      font-family: 'Mona Sans', sans-serif;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .label {
+      font-size: 13px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: #555; margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 28px; font-weight: 700; line-height: 36px;
+      text-align: center; margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 15px; color: #666; text-align: center; margin-bottom: 56px;
+    }
+
+    .options {
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+      width: 100%; max-width: 720px;
+    }
+
+    .option-card {
+      flex: 1; min-width: 260px; max-width: 340px;
+      background: #0e0e10; border: 1px solid #1c1d21; border-radius: 16px;
+      padding: 32px 28px;
+      display: flex; flex-direction: column; gap: 20px;
+      transition: border-color 0.2s, transform 0.15s;
+      text-decoration: none; color: inherit;
+      cursor: pointer;
+    }
+    .option-card:hover { border-color: #fff; transform: translateY(-2px); }
+    .option-card.disabled {
+      opacity: 0.4; cursor: not-allowed; pointer-events: none;
+    }
+
+    .option-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 12px;
+      font-size: 18px; font-weight: 700;
+    }
+    .option-badge.a { background: #fff; color: #000; }
+    .option-badge.b { background: #1c1d21; color: #fff; }
+
+    .option-title {
+      font-size: 20px; font-weight: 700; line-height: 28px;
+    }
+
+    .option-desc {
+      font-size: 14px; font-weight: 400; line-height: 22px; color: #888;
+      flex: 1;
+    }
+
+    .option-tag {
+      display: inline-flex; align-items: center;
+      background: #1c1d21; border-radius: 50px;
+      padding: 4px 12px; font-size: 12px; font-weight: 600; color: #fff;
+      align-self: flex-start;
+    }
+    .option-tag.coming { color: #555; }
+
+    .option-btn {
+      width: 100%; height: 48px; border: none; border-radius: 8px;
+      font-family: 'Mona Sans', sans-serif; font-size: 15px; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.3px; transition: background 0.15s;
+    }
+    .option-btn.a { background: #fff; color: #000; }
+    .option-btn.a:hover { background: #e8e8e8; }
+    .option-btn.b { background: #1c1d21; color: #555; cursor: not-allowed; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 22px; }
+      .options { flex-direction: column; align-items: stretch; }
+      .option-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <p class="label">Prototype selector</p>
+  <h1>Black Coffee – Tirana</h1>
+  <p class="subtitle">Choose a checkout flow to preview</p>
+
+  <div class="options">
+
+    <!-- OPTION A -->
+    <a class="option-card" href="event-select-tickets.html">
+      <div class="option-badge a">A</div>
+      <div>
+        <p class="option-title">Opción A</p>
+        <p class="option-desc">Selección de boletos → Add-ons (seguro + Mandala Club) → Datos de pago → Confirmación</p>
+      </div>
+      <span class="option-tag">Flujo actual</span>
+      <button class="option-btn a" onclick="event.preventDefault(); window.location.href='event-select-tickets.html'">
+        Ir a Opción A →
+      </button>
+    </a>
+
+    <!-- OPTION B (coming soon) -->
+    <div class="option-card disabled">
+      <div class="option-badge b">B</div>
+      <div>
+        <p class="option-title">Opción B</p>
+        <p class="option-desc">Nuevo flujo por definir.</p>
+      </div>
+      <span class="option-tag coming">Próximamente</span>
+      <button class="option-btn b" disabled>Próximamente</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
