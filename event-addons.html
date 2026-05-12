@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Add-ons – Black Coffee - Tirana | GETIN</title>
+  <style>
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Regular.ttf'); font-weight: 400; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Medium.ttf'); font-weight: 500; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-SemiBold.ttf'); font-weight: 600; }
+    @font-face { font-family: 'Mona Sans'; src: url('fonts/MonaSans-Bold.ttf'); font-weight: 700; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #fff; font-family: 'Mona Sans', sans-serif; }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: #000; border-bottom: 1px solid #1c1d21; height: 68px;
+    }
+    .top-bar-inner {
+      max-width: 1200px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+    }
+    .back-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; cursor: pointer; text-decoration: none; color: #fff;
+    }
+    .lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: #fff; color: #11152b; border: none; border-radius: 20px;
+      padding: 6px 10px; font-family: 'Mona Sans', sans-serif;
+      font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; letter-spacing: -0.24px;
+    }
+
+    /* ── LAYOUT ── */
+    .page-content {
+      max-width: 1200px; margin: 0 auto;
+      padding: 32px 20px 80px;
+      display: flex; align-items: flex-start; gap: 0;
+    }
+
+    /* ── LEFT COL ── */
+    .left-col { flex-shrink: 0; width: 420px; padding: 12px 39px 0; }
+    .poster-wrap { width: 342px; height: 420px; border-radius: 20px; overflow: hidden; box-shadow: 0 0 4px rgba(0,0,0,0.25); margin-bottom: 20px; }
+    .poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .event-brief { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+    .event-brief h1 { font-size: 36px; font-weight: 600; line-height: 48px; }
+    .event-brief .sub { font-size: 24px; font-weight: 600; line-height: 36px; }
+    .tags-row { display: flex; gap: 16px; align-items: center; padding-top: 30px; flex-wrap: wrap; }
+    .tag-item { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 400; }
+
+    /* Order Summary */
+    .order-summary { border-bottom: 1px solid #1c1d21; margin-bottom: 16px; }
+    .order-summary-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0 9px; border-bottom: 1px solid #1c1d21; cursor: pointer;
+    }
+    .order-summary-header span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-summary-header .arrow { width: 11px; height: 6px; transition: transform 0.2s; }
+    .order-summary-header.collapsed .arrow { transform: rotate(180deg); }
+    .order-summary-body { padding-top: 20px; }
+    .order-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; }
+    .order-row span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-fees { display: flex; flex-direction: column; gap: 4px; margin-bottom: 20px; }
+    .order-fee-row { display: flex; align-items: center; justify-content: space-between; }
+    .order-fee-row span { font-size: 16px; font-weight: 400; line-height: 24px; }
+    .order-total { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; margin-bottom: 15px; }
+    .order-total span { font-size: 16px; font-weight: 400; line-height: 24px; }
+
+    /* Coupon */
+    .coupon-row {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #1c1d21; padding-bottom: 1px; margin-bottom: 15px;
+    }
+    .coupon-input {
+      background: none; border: none; outline: none; color: #fff;
+      font-family: 'Mona Sans', sans-serif; font-size: 16px;
+      padding: 11.5px 0; flex: 1;
+    }
+    .coupon-apply {
+      background: none; border: none; color: #fff; font-size: 16px;
+      font-family: 'Mona Sans', sans-serif; cursor: pointer; padding: 0;
+    }
+
+    /* ── RIGHT COL ── */
+    .right-col {
+      flex: 1; min-width: 0; padding: 12px 39px 0;
+      display: flex; flex-direction: column; gap: 32px;
+      align-self: flex-start;
+    }
+
+    /* Add-on section */
+    .addon-section { display: flex; flex-direction: column; gap: 15px; }
+    .addon-section-title { font-size: 16px; font-weight: 600; line-height: 18px; }
+
+    /* Add-on row: checkbox + logo + card */
+    .addon-row { display: flex; gap: 10px; align-items: flex-start; }
+    .addon-left { display: flex; flex-direction: column; gap: 10px; align-items: center; flex-shrink: 0; }
+
+    /* Checkbox */
+    .addon-checkbox { display: none; }
+    .addon-check-box {
+      width: 20px; height: 20px; flex-shrink: 0; border-radius: 4px;
+      border: 1.5px solid #555; background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    }
+    .addon-checkbox:checked + .addon-check-box {
+      background: #2563eb; border-color: #2563eb;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center; background-size: 13px;
+    }
+
+    /* Addon logo thumbnail */
+    .addon-logo { width: 88px; height: 88px; flex-shrink: 0; border-radius: 8px; overflow: hidden; }
+    .addon-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Addon card */
+    .addon-card {
+      flex: 1; background: #101112; border-radius: 8px; padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .addon-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+    .addon-card-title { font-size: 19px; font-weight: 700; line-height: 24px; }
+    .addon-price-tag {
+      background: #fff; color: #000; border-radius: 100px;
+      padding: 10px; font-size: 16px; font-weight: 600; line-height: 18px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .addon-desc { font-size: 15px; font-weight: 600; line-height: 26px; color: #fff; }
+    .addon-powered { font-size: 15px; font-weight: 600; line-height: 26px; color: #ff9a4d; }
+    .addon-fine-print {
+      font-size: 11px; font-weight: 400; line-height: 20px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* PAY button */
+    .pay-wrap { padding: 0 8px; }
+    .btn-pay {
+      width: 100%; height: 52px; background: #fff; color: #000;
+      border: none; border-radius: 4px; cursor: pointer;
+      font-family: 'Mona Sans', sans-serif; font-size: 14px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: background 0.15s;
+    }
+    .btn-pay:hover { background: #e8e8e8; }
+
+    /* ── MOBILE RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      .top-bar { height: 56px; }
+      .top-bar-inner { padding: 0 16px; }
+
+      .page-content {
+        flex-direction: column;
+        padding: 16px 16px 100px;
+      }
+
+      .left-col { width: 100%; padding: 0; }
+      .poster-wrap {
+        width: 100%; height: auto;
+        aspect-ratio: 1 / 1; border-radius: 12px; max-width: none;
+      }
+
+      .event-brief h1 { font-size: 24px; line-height: 34px; }
+      .event-brief .sub { font-size: 18px; line-height: 28px; }
+
+      .right-col { width: 100%; padding: 20px 0 0; }
+
+      .addon-card { padding: 16px; }
+      .addon-card-title { font-size: 16px; }
+      .addon-logo { width: 64px; height: 64px; }
+
+      .pay-wrap {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        padding: 10px 16px;
+        background: #000; border-top: 1px solid #1c1d21; z-index: 50;
+      }
+      .btn-pay { border-radius: 8px; height: 52px; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a class="back-btn" href="event-select-tickets.html">
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+        <path d="M8.5 1L1.5 8L8.5 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <button class="lang-btn">
+      <span>EN</span>
+      🏳️
+    </button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-content">
+
+  <!-- LEFT -->
+  <div class="left-col">
+    <div class="poster-wrap">
+      <img src="images/bc.png" alt="Black Coffee - Tirana" />
+    </div>
+
+    <div class="event-brief">
+      <h1>Black Coffee - Tirana</h1>
+      <p class="sub">8R7G+X98, Tiranë, Albania</p>
+      <p class="sub">Jun 4, 2026</p>
+      <div class="tags-row">
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          <span>Techno</span>
+        </div>
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#4f46e5;display:inline-block;"></span>
+          <span>Pacha</span>
+        </div>
+        <div class="tag-item">
+          <span style="width:24px;height:24px;border-radius:50%;background:#dc2626;display:inline-block;"></span>
+          <span>Nightlife</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <div class="order-summary-header" id="summaryHeader" onclick="toggleSummary()">
+        <span>Order Summary</span>
+        <svg class="arrow" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1l4.5 4L10 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="order-summary-body" id="summaryBody">
+        <div class="order-row">
+          <span>1 x Phase 2 - General Tickets</span>
+          <span>€45.00</span>
+        </div>
+        <div class="order-fees">
+          <div class="order-fee-row"><span>Total Fees and Taxes:</span><span>€7.01</span></div>
+          <div class="order-fee-row"><span>Purchase fee:</span><span>€4.50</span></div>
+          <div class="order-fee-row"><span>Merchant Processing Fee:</span><span>€1.52</span></div>
+          <div class="order-fee-row"><span>Service Fee:</span><span>€1.00</span></div>
+        </div>
+        <div class="order-total"><span>Total:</span><span>€52.02</span></div>
+      </div>
+    </div>
+
+    <!-- Coupon -->
+    <div class="coupon-row">
+      <input class="coupon-input" type="text" placeholder="Coupon code" />
+      <button class="coupon-apply">APPLY</button>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-col">
+
+    <!-- Insurance add-on -->
+    <div class="addon-section">
+      <p class="addon-section-title">Protect Your Tickets with Insurance!</p>
+      <div class="addon-row">
+        <div class="addon-left">
+          <input type="checkbox" class="addon-checkbox" id="insuranceCheck" checked />
+          <label class="addon-check-box" for="insuranceCheck"></label>
+          <div class="addon-logo">
+            <img src="images/insurance-logo.svg" alt="Insurance" />
+          </div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-card-header">
+            <span class="addon-card-title">Insurance</span>
+            <span class="addon-price-tag">MX$99.50</span>
+          </div>
+          <p class="addon-desc">Protect your ticket. Cancel up to 72 hours before the event for a full ticket refund. (Service fees not included.)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mandala Club add-on -->
+    <div class="addon-section">
+      <p class="addon-section-title">Suscríbete ahora en Mandala Club</p>
+      <div class="addon-row">
+        <div class="addon-left">
+          <input type="checkbox" class="addon-checkbox" id="mandalaCheck" checked />
+          <label class="addon-check-box" for="mandalaCheck"></label>
+          <div class="addon-logo">
+            <img src="images/mc-logo.svg" alt="Mandala Club" />
+          </div>
+        </div>
+        <div class="addon-card">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <p class="addon-card-title">Haz la prueba ahora y obtén 15 días completamente grátis</p>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <p class="addon-desc">Obtén boletos grátis para todos los eventos, experiencias únicas y las mejores noticias de espectáculos y entretenimientos,</p>
+              <p class="addon-powered">Powered by UX</p>
+            </div>
+          </div>
+          <p class="addon-fine-print">Al continuar con la opción seleccionada aceptas suscribirte a Mandala Club</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAY button -->
+    <div class="pay-wrap">
+      <button class="btn-pay" onclick="window.location.href='event-tickets.html'">PAY</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function toggleSummary() {
+    const header = document.getElementById('summaryHeader');
+    const body   = document.getElementById('summaryBody');
+    const isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    header.classList.toggle('collapsed', isOpen);
+  }
+</script>
+
+</body>
+</html>
