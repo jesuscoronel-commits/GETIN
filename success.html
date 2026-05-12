@@ -59,41 +59,6 @@
     .store-btn-text .get-it { font-size: 10px; color: #fff; letter-spacing: .5px; line-height: 15px; }
     .store-btn-text .store-name { font-size: 16px; color: #fff; letter-spacing: .8px; line-height: 24px; }
 
-    /* MANDALA CLUB CARD */
-    .mandala-card {
-      width: 100%; max-width: 540px; margin-top: 24px;
-      background: #17191f;
-      border-radius: 16px;
-      padding: 28px 24px 24px;
-      display: flex; flex-direction: column; align-items: center; gap: 20px;
-      animation: fadeIn .4s ease .1s both;
-    }
-    .mandala-logo { height: 22px; }
-    .mandala-confirm { font-size: 15px; font-weight: 500; color: #fff; text-align: center; line-height: 1.5; letter-spacing: -0.3px; }
-    .mandala-film { width: 100%; max-width: 376px; border-radius: 8px; overflow: hidden; }
-    .mandala-film img { width: 100%; display: block; }
-    .mandala-tagline { font-size: 17px; font-weight: 600; text-align: center; line-height: 1.4; }
-    .mandala-tagline .gold { color: #e8b500; }
-    .mandala-creds { font-size: 15px; font-weight: 500; color: #fff; text-align: center; line-height: 1.7; letter-spacing: -0.3px; }
-    .mandala-benefits {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px;
-      width: 100%; padding: 0 8px;
-    }
-    .benefit-item { padding: 8px 0; display: flex; flex-direction: column; gap: 3px; }
-    .benefit-label { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
-    .benefit-desc  { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.4; }
-    .btn-explore-mandala {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: #f2f2f2; color: #000;
-      border: 1px solid #000; border-radius: 4px;
-      padding: 12px 20px;
-      font-family: 'Mona Sans', sans-serif; font-size: 15px; font-weight: 500;
-      cursor: pointer; text-decoration: none; white-space: nowrap;
-      transition: background .2s, transform .1s;
-      width: 100%; max-width: 280px;
-    }
-    .btn-explore-mandala:hover { background: #e0e0e0; transform: translateY(-1px); }
-
     /* TOAST */
     .toast {
       position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
@@ -138,15 +103,6 @@
       /* Store buttons: stack vertically */
       .store-btns { flex-direction: column; align-items: stretch; gap: 10px; }
       .store-btn { width: 100%; max-width: 100%; }
-
-      /* Mandala card */
-      .mandala-card {
-        max-width: 100%;
-        padding: 20px 16px 20px;
-        gap: 16px;
-      }
-      .mandala-benefits { gap: 0 16px; }
-      .btn-explore-mandala { max-width: 100%; }
 
       /* Toast */
       .toast { left: 16px; right: 16px; transform: none; min-width: unset; max-width: unset; }
@@ -215,29 +171,6 @@
         </a>
       </div>
     </div>
-  </div>
-
-  <!-- MANDALA CLUB CARD -->
-  <div class="mandala-card">
-    <img class="mandala-logo" src="images/logo.png" alt="Mandala Club" />
-    <p class="mandala-confirm">You're officially on the list<br>Mandala Club has been confirmed.</p>
-    <div class="mandala-film">
-      <img src="images/rollo.png" alt="Mandala Club" />
-    </div>
-    <p class="mandala-tagline">
-      <span class="gold">Los miembros entran primero.</span> <span style="color:#fff;">Siempre.</span>
-    </p>
-    <p class="mandala-creds" id="mandalaCredsDisplay">
-      Usuario: <strong>jesus.coronel@dc1.com.mx</strong><br>Contraseña: <strong style="font-family:monospace;background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:4px;">ArdillaLider1-</strong>
-    </p>
-    <div class="mandala-benefits">
-      <div class="benefit-item"><span class="benefit-label" style="color:#8bd391;">BOLETOS</span><span class="benefit-desc">Exclusive member experiences</span></div>
-      <div class="benefit-item"><span class="benefit-label" style="color:#fbbe00;">VIAJES</span><span class="benefit-desc">Especial prices and surprises</span></div>
-      <div class="benefit-item"><span class="benefit-label" style="color:#f67b9b;">EXPERIENCIAS</span><span class="benefit-desc">Early access to Zamna tickets</span></div>
-      <div class="benefit-item"><span class="benefit-label" style="color:#61c1db;">TRIVIAS</span><span class="benefit-desc">Especial prices and surprises</span></div>
-      <div class="benefit-item"><span class="benefit-label" style="color:#b26eb8;">BENEFICIOS</span><span class="benefit-desc">Especial prices and surprises</span></div>
-    </div>
-    <button class="btn-explore-mandala" onclick="exploreMandala()">Explore Mandala Club</button>
   </div>
 
 </div>
