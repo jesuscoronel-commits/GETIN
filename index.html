@@ -1120,6 +1120,103 @@
       transition: background 0.15s;
     }
     .slider-arrow:hover { background: #2c2d31; }
+
+    /* ── MOBILE RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Header */
+      .header-inner { padding: 0 16px; }
+      .header-nav { display: none; }
+      .create-event-wrap { padding: 0 4px; }
+      .create-event-btn { font-size: 12px; padding: 8px 14px; }
+      .search-wrap { padding: 0 4px; }
+      .avatar-wrap { padding: 0 4px; }
+      .lang-wrap { padding: 0 4px; }
+      .burger-wrap { padding: 0 8px; }
+
+      /* Categories toolbar */
+      .toolbar { padding: 12px 0 20px; }
+      .toolbar-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .categories-menu { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .cat-scroll { overflow: visible; gap: 0; }
+      .cat-gradient { display: none; }
+      .toolbar-filters {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 16px;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        height: auto;
+      }
+      .filter-btn { flex-shrink: 0; }
+
+      /* Spotify banner */
+      .spotify-banner { padding: 0 16px; }
+      .spotify-inner { flex-direction: column; gap: 12px; padding: 14px 16px; }
+      .spotify-text { font-size: 13px; white-space: normal; }
+
+      /* Main slider */
+      .main-slider-inner { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .slider-track { gap: 0; }
+      .slide-card { width: calc(100vw - 32px); padding: 0 16px 16px; }
+      .slide-img-wrap { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+
+      /* Discover / stories */
+      .discover-title { font-size: 26px; line-height: 38px; margin-bottom: 32px; padding: 0 16px; }
+      .stories-carousel { height: 460px; }
+      .stories-track { padding: 0 16px; justify-content: center; }
+      .story-card.side { display: none; }
+      .story-card.center { width: calc(100vw - 32px); margin: 0; }
+
+      /* Events grid */
+      .events-section { margin-bottom: 32px; }
+      .events-section > .carousel-toolbar,
+      .events-section > .events-grid { padding: 0 16px; }
+      .carousel-toolbar { flex-direction: row; gap: 12px; padding: 0 16px; }
+      .carousel-title { font-size: 20px; }
+      .events-grid {
+        flex-direction: column;
+        overflow: visible;
+        padding: 0 16px;
+      }
+      .event-card { width: 100%; padding: 12px 0; }
+      .event-img { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+      .event-img img { width: 100%; height: 100%; }
+
+      /* Artists section */
+      .artists-section { margin-bottom: 32px; }
+      .artists-inner { padding: 0 16px; }
+      .artists-header { flex-direction: column; gap: 16px; }
+      .artists-title { font-size: 26px; line-height: 36px; }
+      .artists-grid { gap: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+      .artist-card { width: 140px; flex-shrink: 0; }
+
+      /* Producers section */
+      .producers-section { margin-bottom: 32px; }
+      .producers-inner { padding: 0 16px; }
+      .producers-grid { grid-template-columns: 1fr; }
+
+      /* Explore section */
+      .explore-section { margin-bottom: 32px; }
+      .explore-inner { flex-direction: column; padding: 0 16px; }
+      .next-week-card { min-height: 280px; padding: 24px; }
+      .next-week-label { font-size: 36px; }
+      .explore-card { padding: 24px; }
+      .explore-title { font-size: 32px; }
+
+      /* Section pad */
+      .section-pad { margin-bottom: 40px; }
+      .section-pad .section-content { padding: 0 16px; }
+
+      /* Footer */
+      .footer { padding: 40px 16px 24px; }
+      .footer-top { flex-direction: column; gap: 32px; margin-bottom: 32px; }
+      .footer-brand { flex: none; }
+      .footer-col { flex: none; }
+      .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .footer-bottom-links { flex-wrap: wrap; gap: 12px; }
+    }
   </style>
 </head>
 <body>

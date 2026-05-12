@@ -544,6 +544,72 @@
       object-fit: contain;
       object-position: bottom right;
     }
+
+    /* ── MOBILE RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Top bar */
+      .top-bar { height: 56px; }
+      .top-bar-inner { padding: 0 16px; gap: 12px; }
+      .get-tickets-bar { width: 100%; max-width: 220px; height: 44px; font-size: 15px; }
+
+      /* Page layout: stack columns */
+      .page-content {
+        flex-direction: column;
+        padding: 16px 16px 100px;
+        gap: 0;
+      }
+
+      /* Poster */
+      .poster-col {
+        width: 100%;
+        padding: 0;
+        position: static;
+      }
+      .poster-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+      }
+
+      /* Details */
+      .details-col { width: 100%; padding: 20px 0 0; }
+
+      /* Title */
+      .event-title { font-size: 26px; line-height: 36px; margin-bottom: 12px; }
+
+      /* Meta */
+      .meta-row { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .date-range { flex-wrap: wrap; }
+
+      /* GET TICKETS main button: sticky at bottom */
+      .get-tickets-main {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        margin-bottom: 0;
+        z-index: 50;
+        font-size: 17px;
+        height: 60px;
+      }
+
+      /* Venue map */
+      .venue-map { max-width: 100%; height: 220px; }
+
+      /* Venue row */
+      .venue-row { flex-wrap: wrap; gap: 10px; height: auto; padding: 10px 0; }
+      .venue-right { flex-wrap: wrap; }
+
+      /* App banner */
+      .app-banner { flex-direction: column; height: auto; }
+      .app-banner-left { flex: none; padding: 24px; gap: 20px; }
+      .app-banner-right { display: none; }
+      .app-banner-headline h2 { font-size: 28px; line-height: 34px; }
+    }
   </style>
 </head>
 <body>

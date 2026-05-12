@@ -158,6 +158,59 @@
     }
     .btn-continue-info .ticket-count { font-size: 11px; color: #a29bb1; line-height: 16.5px; white-space: nowrap; }
     .btn-continue-info .ticket-price-sm { font-size: 12px; color: #000; line-height: 18px; white-space: nowrap; }
+
+    /* ── MOBILE RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Top bar */
+      .top-bar { height: 56px; }
+      .top-bar-inner { padding: 0 16px; }
+
+      /* Layout: single column */
+      .page-content {
+        flex-direction: column;
+        padding: 16px 16px 100px;
+      }
+
+      /* Left col */
+      .left-col { width: 100%; padding: 0; }
+      .poster-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        max-width: none;
+      }
+
+      /* Event brief */
+      .event-brief h1 { font-size: 24px; line-height: 34px; }
+      .event-brief .sub { font-size: 18px; line-height: 28px; }
+
+      /* Mandala promo */
+      .mandala-title { font-size: 24px; line-height: 34px; }
+      .mandala-subtitle { font-size: 18px; line-height: 28px; }
+      .mandala-img { max-width: 100%; }
+
+      /* Right col */
+      .right-col { width: 100%; padding: 20px 0 0; }
+
+      /* Ticket qty controls */
+      .ticket-row { flex-wrap: wrap; gap: 12px; }
+      .ticket-qty { gap: 24px; }
+
+      /* Continue button: sticky at bottom */
+      .continue-wrap {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 16px;
+        background: #000;
+        border-top: 1px solid #1c1d21;
+        z-index: 50;
+      }
+      .btn-continue-ticket { border-radius: 8px; }
+    }
   </style>
 </head>
 <body>

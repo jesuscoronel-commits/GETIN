@@ -812,6 +812,61 @@
       transition: opacity 0.2s;
     }
     .btn-continue:hover { opacity: 0.9; }
+
+    /* ── MOBILE RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Top bar */
+      .top-bar { height: 56px; }
+      .top-bar-inner { padding: 0 16px; }
+
+      /* Layout: single column, left above right */
+      .page-content {
+        flex-direction: column;
+        padding: 16px 16px 40px;
+        min-height: unset;
+      }
+
+      /* Left col: compact above form */
+      .left-col {
+        width: 100%;
+        padding: 0;
+        gap: 16px;
+      }
+      .poster-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        max-width: none;
+      }
+      .event-brief h1 { font-size: 22px; line-height: 32px; }
+      .event-brief .address,
+      .event-brief .date { font-size: 16px; line-height: 24px; }
+
+      /* Mandala promo in left col */
+      .mandala-title { font-size: 22px; line-height: 32px; }
+      .mandala-subtitle { font-size: 16px; line-height: 24px; }
+      .mandala-img { max-width: 100%; }
+
+      /* Right col: full width form */
+      .right-col { width: 100%; padding: 20px 0 0; }
+      .form-card { border-radius: 12px; padding: 16px 14px 24px; }
+      .form-heading { font-size: 20px; }
+
+      /* Tabs */
+      .tab { font-size: 9px; padding: 8px 6px 10px; }
+
+      /* Payment two-col fields: stack on very small screens */
+      .payment-two-col { flex-direction: column; gap: 12px; }
+
+      /* Smart access */
+      .smartaccess-title { font-size: 20px; }
+      .btn-device-access { max-width: 100%; }
+
+      /* Guest info */
+      .guest-section { padding: 16px; }
+    }
   </style>
 </head>
 <body>
