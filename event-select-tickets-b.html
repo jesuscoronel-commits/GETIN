@@ -84,28 +84,6 @@
       font-family: 'Mona Sans', sans-serif; cursor: pointer; padding: 0;
     }
 
-    /* Mandala Club promo (left col) */
-    .mandala-promo { display: flex; flex-direction: column; gap: 12px; }
-    .mandala-venue { width: 100%; height: 201px; border-radius: 12px; overflow: hidden; }
-    .mandala-venue img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .mandala-promo-title { font-size: 36px; font-weight: 600; line-height: 48px; }
-    .mandala-promo-sub { font-size: 24px; font-weight: 600; line-height: 36px; }
-    .mandala-promo-desc { font-size: 15px; font-weight: 600; line-height: 26px; }
-    .mandala-checkbox-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; cursor: pointer; }
-    .mandala-cb { display: none; }
-    .mandala-cb-box {
-      width: 22px; height: 22px; flex-shrink: 0; border-radius: 5px;
-      border: 1.5px solid #555; background: transparent;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .mandala-cb:checked + .mandala-cb-box {
-      background: #2563eb; border-color: #2563eb;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: center; background-size: 13px;
-    }
-    .mandala-checkbox-row span { font-size: 16px; font-weight: 400; line-height: 20px; }
-
     /* ── RIGHT COL ── */
     .right-col {
       flex: 1; min-width: 0; padding: 12px 39px 0;
@@ -264,21 +242,6 @@
     <div class="coupon-row">
       <input class="coupon-input" type="text" placeholder="Coupon code" />
       <button class="coupon-apply">APPLY</button>
-    </div>
-
-    <!-- Mandala Club promo -->
-    <div class="mandala-promo">
-      <div class="mandala-venue">
-        <img src="images/mandala-venue.png" alt="Mandala Club" />
-      </div>
-      <p class="mandala-promo-title">Suscríbete ahora en Mandala Club</p>
-      <p class="mandala-promo-sub">Haz la prueba ahora y obtén 15 días completamente grátis</p>
-      <p class="mandala-promo-desc">Obtén boletos grátis para todos los eventos, experiencias únicas y las mejores noticias de espectáculos y entretenimientos,</p>
-      <label class="mandala-checkbox-row">
-        <input type="checkbox" class="mandala-cb" id="mandalaSubscribe" checked />
-        <span class="mandala-cb-box"></span>
-        <span>Acepto suscribirme a Mandala Club</span>
-      </label>
     </div>
   </div>
 
