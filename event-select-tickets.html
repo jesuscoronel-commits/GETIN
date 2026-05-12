@@ -314,7 +314,7 @@
 
     <!-- Continue -->
     <div class="continue-wrap">
-      <button class="btn-continue-ticket" onclick="window.location.href='event-addons.html'">
+      <button class="btn-continue-ticket" onclick="window.location.href = localStorage.getItem('flow')==='B' ? 'event-tickets.html' : 'event-addons.html'">
         <span class="btn-continue-label">Continue</span>
         <div class="btn-continue-info">
           <span class="ticket-count" id="ticketCount">1 ticket</span>

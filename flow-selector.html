@@ -101,28 +101,30 @@
   <div class="options">
 
     <!-- OPTION A -->
-    <a class="option-card" href="index.html">
+    <a class="option-card" href="index.html" onclick="localStorage.setItem('flow','A')">
       <div class="option-badge a">A</div>
       <div>
         <p class="option-title">Opción A</p>
         <p class="option-desc">Selección de boletos → Add-ons (seguro + Mandala Club) → Datos de pago → Confirmación</p>
       </div>
-      <span class="option-tag">Flujo actual</span>
-      <button class="option-btn a" onclick="event.preventDefault(); window.location.href='index.html'">
+      <span class="option-tag">Con add-ons</span>
+      <button class="option-btn a" onclick="event.preventDefault(); localStorage.setItem('flow','A'); window.location.href='index.html'">
         Ir a Opción A →
       </button>
     </a>
 
-    <!-- OPTION B (coming soon) -->
-    <div class="option-card disabled">
+    <!-- OPTION B -->
+    <a class="option-card" href="index.html" onclick="localStorage.setItem('flow','B')">
       <div class="option-badge b">B</div>
       <div>
         <p class="option-title">Opción B</p>
-        <p class="option-desc">Nuevo flujo por definir.</p>
+        <p class="option-desc">Selección de boletos → Datos de pago → Confirmación</p>
       </div>
-      <span class="option-tag coming">Próximamente</span>
-      <button class="option-btn b" disabled>Próximamente</button>
-    </div>
+      <span class="option-tag">Sin add-ons</span>
+      <button class="option-btn b" style="background:#fff;color:#000;cursor:pointer;" onclick="event.preventDefault(); localStorage.setItem('flow','B'); window.location.href='index.html'">
+        Ir a Opción B →
+      </button>
+    </a>
 
   </div>
 
