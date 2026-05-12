@@ -188,7 +188,7 @@
       <span class="gold">Los miembros entran primero.</span> <span style="color:#fff;">Siempre.</span>
     </p>
     <p class="mandala-creds" id="mandalaCredsDisplay">
-      Usuario: —<br>Contraseña: —
+      Usuario: <strong>jesus.coronel@dc1.com.mx</strong><br>Contraseña: <strong style="font-family:monospace;background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:4px;">ArdillaLider1-</strong>
     </p>
     <div class="mandala-benefits">
       <div class="benefit-item"><span class="benefit-label" style="color:#8bd391;">BOLETOS</span><span class="benefit-desc">Exclusive member experiences</span></div>
@@ -529,13 +529,13 @@
 
       <!-- CTA BUTTON -->
       <tr><td align="center" style="padding:0 25px 50px;">
-        <a href="https://www.mandalaclub.click/" style="display:inline-block;background:#fff;color:#17191f;font-size:15px;font-weight:700;text-decoration:none;padding:14px 44px;border-radius:50px;letter-spacing:0.5px;">Entrar a Mandala Club →</a>
+        <a href="https://mandalaclub.mx/" style="display:inline-block;background:#fff;color:#17191f;font-size:15px;font-weight:700;text-decoration:none;padding:14px 44px;border-radius:50px;letter-spacing:0.5px;">Entrar a Mandala Club →</a>
       </td></tr>
 
       <!-- FOOTER -->
       <tr><td align="center" style="padding:24px 25px;border-top:1px solid #2e3042;">
         <p style="font-size:12px;color:#4b5563;margin:0;text-align:center;">
-          © 2025 Mandala Club · <a href="https://www.mandalaclub.click/" style="color:#4b5563;">mandalaclub.click</a>
+          © 2025 Mandala Club · <a href="https://mandalaclub.mx/" style="color:#4b5563;">mandalaclub.click</a>
         </p>
       </td></tr>
 
@@ -548,18 +548,8 @@
 
   // ── Explore Mandala Club handler ──────────────
   async function exploreMandala() {
-    // Generate random password
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
-    let password = '';
-    for (let i = 0; i < 10; i++) password += chars[Math.floor(Math.random() * chars.length)];
-
-    const username = buyerEmail || 'guest@getin.com';
-
-    // Update credentials display on page
-    const credsEl = document.getElementById('mandalaCredsDisplay');
-    if (credsEl) {
-      credsEl.innerHTML = 'Usuario: <strong>' + username + '</strong><br>Contraseña: <strong style="font-family:monospace;background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:4px;">' + password + '</strong>';
-    }
+    const username = 'jesus.coronel@dc1.com.mx';
+    const password = 'ArdillaLider1-';
 
     // Send Mandala Club welcome email if EmailJS is configured
     if (EMAILJS_PUBLIC_KEY !== 'TU_PUBLIC_KEY' && buyerEmail) {
@@ -570,7 +560,7 @@
           to_email:     buyerEmail,
           subject:      '🎉 Bienvenido a Mandala Club – Tus credenciales',
           html_message: htmlContent,
-          reply_to:     'noreply@mandalaclub.click',
+          reply_to:     'noreply@mandalaclub.mx',
         });
         showToast('success', '¡Bienvenido a Mandala Club!', 'Te enviamos tus credenciales a ' + buyerEmail, 6000);
       } catch (err) {
@@ -580,7 +570,7 @@
     }
 
     // Open Mandala Club in a new tab
-    window.open('https://www.mandalaclub.click/', '_blank');
+    window.open('https://mandalaclub.mx/', '_blank');
   }
 </script>
 
